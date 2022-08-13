@@ -8,6 +8,16 @@ group = 'com.vasylkorol'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
+
+
+ext {
+    mapstructVersion = "1.5.2.Final"
+}
+
+
+
+
+
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
@@ -31,6 +41,19 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+
+    //mapstruct
+    implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+
+    //flyway
+    implementation 'org.flywaydb:flyway-core'
+
+    //validator
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+
+
 }
 
 tasks.named('test') {

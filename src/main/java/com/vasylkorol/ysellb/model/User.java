@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -31,6 +32,12 @@ public class User {
     private String password;
 
     private boolean isActive = true;
+
+    @OneToMany(mappedBy = "user")
+    private List<Book> books;
+
+
+
 
 
 
