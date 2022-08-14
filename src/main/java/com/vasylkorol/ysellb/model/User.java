@@ -5,9 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -28,13 +26,14 @@ public class User {
 
     private String password;
 
-    private boolean isActive = true;
+    private boolean isActive;
 
     @OneToMany(mappedBy = "user")
     private List<Book> books;
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
 
 
 

@@ -22,14 +22,16 @@ public class BookController {
     private final BookService bookService;
     @GetMapping("/all")
     public ResponseEntity<List<BookDto>> getAll(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
-        System.out.println(principal.getUser() );
-
         return new ResponseEntity<>(bookService.getAll(), HttpStatus.OK);
     }
 
-    @PostMapping("/create")
+    @GetMapping("/{id}")
+    public ResponseEntity<BookDto> getBook(@PathVariable("id") int id){
+        return ResponseEntity.ok(bookService.getBook(id));
+    }
+
+
+    @PostMapping("/add")
     public ResponseEntity<BookDto> createBook(@RequestBody BookDto bookDto){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();

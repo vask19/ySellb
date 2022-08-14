@@ -8,6 +8,7 @@ import com.vasylkorol.ysellb.repository.BookRepository;
 import com.vasylkorol.ysellb.repository.UserRepository;
 import com.vasylkorol.ysellb.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -42,5 +43,9 @@ public class BookService {
                 .orElseThrow(() ->  new UsernameNotFoundException("User not found"));
 
 
+    }
+
+    public BookDto getBook(int id) {
+        return mapper.fromBook(bookRepository.findById(id).orElse(new Book()));
     }
 }
