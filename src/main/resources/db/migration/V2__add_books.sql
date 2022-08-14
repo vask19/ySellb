@@ -1,2 +1,0 @@
-INSERT INTO book(name,description,author,publishing_house,language,year_of_publication,number_of_pages)
-VALUES ('I''m Glad My Mom Died','A heartbreaking and hilarious memoir by iCarly and Sam & Cat star Jennette McCurdy about her struggles as a former child actor—including eating disorders, addiction, and a complicated relationship with her overbearing mother—and how she retook control of her life. ','Jennette McCurdy','Simon & Schuster','English',2018,320);
