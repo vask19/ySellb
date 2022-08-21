@@ -15,7 +15,7 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/book")
+@RequestMapping("/api/book")
 @RequiredArgsConstructor
 public class BookController {
 
@@ -35,9 +35,6 @@ public class BookController {
     public ResponseEntity<BookDto> createBook(@RequestBody BookDto bookDto){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
-
-       // return new ResponseEntity<>(bookDto,HttpStatus.OK);
-//
 
        return new ResponseEntity<>(bookService.saveNewBook(bookDto,principal),HttpStatus.OK);
 

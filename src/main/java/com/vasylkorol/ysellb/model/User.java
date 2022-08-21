@@ -26,6 +26,7 @@ public class User {
 
     private String password;
 
+
     private boolean isActive;
 
     @OneToMany(mappedBy = "user")
@@ -33,6 +34,9 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private Bucket bucket;
 
 
 

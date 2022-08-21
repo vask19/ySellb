@@ -1,0 +1,12 @@
+----------------------------------
+book controller
+
+add book to app - book/add
+get book - book/id
+get all books. book/all
+---------------------------------
+bucket controller
+
+
+add book to bucket. bucket/add/id
+

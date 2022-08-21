@@ -13,6 +13,8 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 public class UserDto  {
 
+    private int id;
+
     @NotEmpty(message = "The name cannot be empty")
     @Size(min = 2,max = 100,message = "The name must be in the range from 2 to 100 characters")
     private String username;
