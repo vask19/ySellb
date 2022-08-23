@@ -17,5 +17,5 @@ import java.util.List;
 public class BucketDto {
 
     private int id;
-    private List<Book> books;
+    private List<Integer> books;
 }

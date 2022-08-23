@@ -31,10 +31,12 @@ public class BucketController {
     }
 
     @GetMapping()
-    public ResponseEntity<BucketDto> getBucket(Principal principal){
+    public ResponseEntity<Object> getBucket(Principal principal){
 
-        BucketDto bucketDto = bucketService.getBucket(principal);
-        return ResponseEntity.ok(bucketDto
+        Bucket bucketDto = bucketService.getBucket(principal);
+        System.out.println(7);
+        bucketService.getBucketByUser(principal);
+        return ResponseEntity.ok("ok"
 
 
         );
