@@ -2,6 +2,7 @@ package com.vasylkorol.ysellb.service;
 
 import com.vasylkorol.ysellb.dto.BookDto;
 import com.vasylkorol.ysellb.dto.BucketDto;
+import com.vasylkorol.ysellb.mapper.BookMapper;
 import com.vasylkorol.ysellb.model.Book;
 import com.vasylkorol.ysellb.model.Bucket;
 import com.vasylkorol.ysellb.model.User;
@@ -29,6 +30,7 @@ public class BucketService {
     private final UserService userService;
     private final UserRepository userRepository;
     private final BookRepository bookRepository;
+    private final BookMapper bookMapper = BookMapper.MAPPER;
 
 
     @Transactional
@@ -46,28 +48,28 @@ public class BucketService {
                 -> new UsernameNotFoundException("User not exists"));
     }
 
-    @Transactional
-    public Bucket getBucket(Principal principal) {
-        User user = userRepository.findFirstByUsername(principal.getName()).orElseThrow(()
-                -> new UsernameNotFoundException("User not exists"));
-        Bucket bucket = user.getBucket();
-        if (bucket == null) {
-            bucket = createBucket(user);
-            user.setBucket(bucket);
-            userService.saveUser(user);
-
-        }
-
-        BucketDto bucketDto = new BucketDto();
-       // bucketDto.setBooks(bucket.getBooks());
-        bucketDto.setId(user.getId());
-        bucketDto.setId(bucket.getId());
-
-
-        return bucket;
-
-
-    }
+//    @Transactional
+//    public Bucket getBucket(Principal principal) {
+//        User user = userRepository.findFirstByUsername(principal.getName()).orElseThrow(()
+//                -> new UsernameNotFoundException("User not exists"));
+//        Bucket bucket = user.getBucket();
+//        if (bucket == null) {
+//            bucket = createBucket(user);
+//            user.setBucket(bucket);
+//            userService.saveUser(user);
+//
+//        }
+//
+//        BucketDto bucketDto = new BucketDto();
+//       // bucketDto.setBooks(bucket.getBooks());
+//        bucketDto.setId(user.getId());
+//        bucketDto.setId(bucket.getId());
+//
+//
+//        return bucket;
+//
+//
+//    }
 
 
 //    @Transactional
@@ -103,22 +105,34 @@ public class BucketService {
         bucket.setBooks(newProductList);
         bucketRepository.save(bucket);
 
-        return new BookDto();
+        return bookMapper.fromBook(bookRepository.getReferenceById(bookId));
 
     }
 
-    public BookDto getBucketByUser(Principal principal){
+    public BucketDto getBucketByUser(Principal principal){
+        userRepository.findFirstByUsername(principal.getName()).orElseThrow(()
+                -> new UsernameNotFoundException("User not exists"));
+
         Bucket bucket = getUserByPrincipal(principal).getBucket();
-        bucket.getUser();
         List<Book> books = bucket.getBooks();
         List<Integer> bookIds = books.stream().map(Book::getId).toList();
-        return new BookDto();
+        BucketDto bucketDto = new BucketDto();
+        bucketDto.setBooks(bookMapper.fromBookList(getCollectRefProductsByIds(bookIds)));
+        return bucketDto;
 
     }
 
 
+    @Transactional
+    public BookDto deleteBook(Integer id, Principal principal) {
+        Bucket bucket = getUserByPrincipal(principal).getBucket();
+        Book book = bookRepository.findById(id).orElseThrow(()
+            -> new UsernameNotFoundException(""));
+        bucket.getBooks().remove(book);
+        bucketRepository.save(bucket);
+        return bookMapper.fromBook(book);
 
-
+    }
 }
 
 

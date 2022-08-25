@@ -9,13 +9,11 @@ import com.vasylkorol.ysellb.repository.UserRepository;
 import com.vasylkorol.ysellb.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -47,5 +45,17 @@ public class BookService {
 
     public BookDto getBook(int id) {
         return mapper.fromBook(bookRepository.findById(id).orElse(new Book()));
+    }
+
+
+    //TODO
+    public BookDto deleteBook(Integer id, Principal principal) {
+        Book book = bookRepository.getReferenceById(id);
+        if (book.getUser().getUsername().equals(principal.getName())) {
+            BookDto bookDto = mapper.fromBook(book);
+            bookRepository.delete(book);
+            return bookDto;
+        }
+        else return new BookDto();
     }
 }

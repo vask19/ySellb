@@ -4,9 +4,30 @@ book controller
 add book to app - book/add
 get book - book/id
 get all books. book/all
+delete book
 ---------------------------------
 bucket controller
-
-
+delete book
+get bucket
 add book to bucket. bucket/add/id
+
+----------------------------------
+
+admin controller
+
+adds a role 'admin' to user
+update user's status
+delete user
+get user/users
+delete book
+----------------------------------
+
+user controller
+
+get user
+update user info
+
+
+
+
 

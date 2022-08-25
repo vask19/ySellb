@@ -40,4 +40,10 @@ public class BookController {
 
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<BookDto> deleteBookFromUser(@PathVariable Integer id,Principal principal){
+        return new ResponseEntity<>(bookService.deleteBook(id,principal),HttpStatus.OK);
+
+    }
+
 }
