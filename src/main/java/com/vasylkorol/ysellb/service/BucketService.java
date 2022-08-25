@@ -97,8 +97,12 @@ public class BucketService {
 
     @Transactional
     public BookDto addBook(Integer bookId, Principal principal) {
-        User user = getUserByPrincipal(principal);
+        User user = userRepository.findFirstByUsername(principal.getName()).orElseThrow(()
+                -> new UsernameNotFoundException("User not exists"));
+
         Bucket bucket = user.getBucket();
+        if (bucket == null)
+            createBucket(user);
         List<Book> products = bucket.getBooks();
         List<Book> newProductList = products == null ? new ArrayList<>() : new ArrayList<>(products);
         newProductList.addAll(getCollectRefProductsByIds(Collections.singletonList(bookId)));
@@ -110,10 +114,12 @@ public class BucketService {
     }
 
     public BucketDto getBucketByUser(Principal principal){
-        userRepository.findFirstByUsername(principal.getName()).orElseThrow(()
+        User user = userRepository.findFirstByUsername(principal.getName()).orElseThrow(()
                 -> new UsernameNotFoundException("User not exists"));
 
         Bucket bucket = getUserByPrincipal(principal).getBucket();
+        if (bucket == null)
+            createBucket(user);
         List<Book> books = bucket.getBooks();
         List<Integer> bookIds = books.stream().map(Book::getId).toList();
         BucketDto bucketDto = new BucketDto();

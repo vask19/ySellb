@@ -1,6 +1,8 @@
 package com.vasylkorol.ysellb.config;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.vasylkorol.ysellb.model.User;
+import com.vasylkorol.ysellb.security.CustomUserDetails;
 import com.vasylkorol.ysellb.security.JWTUtil;
 import com.vasylkorol.ysellb.service.CustomUserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -38,13 +40,23 @@ public class JWTFilter extends OncePerRequestFilter {
               try {
                   String  username = jwtUtil.validateTokenAndRetrieveClaims(jwt);
                   UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-                  UsernamePasswordAuthenticationToken authToken =
-                          new UsernamePasswordAuthenticationToken(userDetails,userDetails.getPassword(),userDetails.getAuthorities());
+                  User user = ((CustomUserDetails) userDetails).getUser();
+                  if (!user.isActive()) {
+                      response.sendError(HttpServletResponse.SC_BAD_REQUEST,
+                              "user blocked");
 
-                  if (SecurityContextHolder.getContext().getAuthentication() == null){
-                      SecurityContextHolder.getContext().setAuthentication(authToken);
                   }
-              }catch (JWTVerificationException exc){
+                  else {
+                      UsernamePasswordAuthenticationToken authToken =
+                              new UsernamePasswordAuthenticationToken(userDetails,userDetails.getPassword(),userDetails.getAuthorities());
+
+                      if (SecurityContextHolder.getContext().getAuthentication() == null){
+                          SecurityContextHolder.getContext().setAuthentication(authToken);
+                      }
+                  }
+
+
+              }catch (Exception exception){
                   response.sendError(HttpServletResponse.SC_BAD_REQUEST,
                           "Invalid JWT Token");
               }

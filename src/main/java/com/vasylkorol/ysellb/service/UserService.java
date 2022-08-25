@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -24,5 +26,13 @@ public class UserService {
 
     public void saveUser(User user) {
         userRepository.save(user);
+    }
+
+    public List<UserDto> getAllUsers(){
+        return userMapper.fromUserList(userRepository.findAll());
+    }
+
+    public UserDto getUserById(Integer id) {
+        return userMapper.fromUser(userRepository.findFirstById(id).orElse(new User()));
     }
 }

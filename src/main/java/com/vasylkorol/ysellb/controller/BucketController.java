@@ -14,6 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -33,13 +36,15 @@ public class BucketController {
     }
 
     @GetMapping()
-    public ResponseEntity<Object> getBucket(Principal principal){
+    public ResponseEntity<List<BookDto>> getBucket(Principal principal){
         BucketDto bucketDto = bucketService.getBucketByUser(principal);
         bucketService.getBucketByUser(principal);
-        return ResponseEntity.ok(bucketDto.getBooks()
+        return new ResponseEntity<>((bucketDto.getBooks() == null
+                ? Collections.emptyList()
+                : bucketDto.getBooks()),HttpStatus.OK);
 
 
-        );
+
     }
 
     @DeleteMapping("/delete/{id}")
