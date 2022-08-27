@@ -2,6 +2,7 @@ package com.vasylkorol.ysellb.util;
 
 import com.vasylkorol.ysellb.dto.UserDto;
 import com.vasylkorol.ysellb.model.User;
+import com.vasylkorol.ysellb.payload.request.SignupRequest;
 import com.vasylkorol.ysellb.service.CustomUserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,13 +19,16 @@ public class UserValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return UserDto.class.equals(clazz);
+        return SignupRequest.class.equals(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
+
+
         //TODO : create equals service
-        UserDto user = (UserDto) target;
+        SignupRequest user = (SignupRequest) target;
+        System.out.println(target);
         try {
             userDetailsService.loadUserByUsername(user.getUsername());
 

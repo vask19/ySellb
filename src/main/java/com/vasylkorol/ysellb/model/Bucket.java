@@ -19,11 +19,9 @@ public class Bucket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-
     @OneToOne
     @JoinColumn(name = "users_id")
     private User user;
-
 
     @ManyToMany
     @JoinTable(name = "buckets_books",

@@ -1,5 +1,0 @@
-ALTER TABLE users
-    ADD bucket_id INTEGER;
-
-ALTER TABLE users
-    ADD CONSTRAINT FK_USERS_ON_BUCKET FOREIGN KEY (bucket_id) REFERENCES bucket (id);

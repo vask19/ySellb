@@ -48,44 +48,6 @@ public class BucketService {
                 -> new UsernameNotFoundException("User not exists"));
     }
 
-//    @Transactional
-//    public Bucket getBucket(Principal principal) {
-//        User user = userRepository.findFirstByUsername(principal.getName()).orElseThrow(()
-//                -> new UsernameNotFoundException("User not exists"));
-//        Bucket bucket = user.getBucket();
-//        if (bucket == null) {
-//            bucket = createBucket(user);
-//            user.setBucket(bucket);
-//            userService.saveUser(user);
-//
-//        }
-//
-//        BucketDto bucketDto = new BucketDto();
-//       // bucketDto.setBooks(bucket.getBooks());
-//        bucketDto.setId(user.getId());
-//        bucketDto.setId(bucket.getId());
-//
-//
-//        return bucket;
-//
-//
-//    }
-
-
-//    @Transactional
-//    public BookDto addBook(int id, Principal principal) {
-//        User user = getUserByPrincipal(principal);
-//        Bucket bucket = user.getBucket();
-//        Book book = bookRepository.findById(id).orElseThrow(()
-//                -> new UsernameNotFoundException(""));
-//        bucket.getBooks().add(book);
-//        bucketRepository.save(bucket);
-//
-//        return new BookDto();
-//
-//
-//    }
-
     private List<Book> getCollectRefProductsByIds(List<Integer> bookIds) {
         return bookIds.stream()
                 .map(bookRepository::getOne)
@@ -97,12 +59,11 @@ public class BucketService {
 
     @Transactional
     public BookDto addBook(Integer bookId, Principal principal) {
-        User user = userRepository.findFirstByUsername(principal.getName()).orElseThrow(()
-                -> new UsernameNotFoundException("User not exists"));
+        User user =  getUserByPrincipal(principal);
 
-        Bucket bucket = user.getBucket();
-        if (bucket == null)
-            createBucket(user);
+        Bucket bucket = bucketRepository.findByUser(user).orElse(null);
+        if (bucket == null){
+            bucket = createBucket(user);}
         List<Book> products = bucket.getBooks();
         List<Book> newProductList = products == null ? new ArrayList<>() : new ArrayList<>(products);
         newProductList.addAll(getCollectRefProductsByIds(Collections.singletonList(bookId)));
@@ -114,13 +75,13 @@ public class BucketService {
     }
 
     public BucketDto getBucketByUser(Principal principal){
-        User user = userRepository.findFirstByUsername(principal.getName()).orElseThrow(()
-                -> new UsernameNotFoundException("User not exists"));
+        User user =  getUserByPrincipal(principal);
+        Bucket bucket = bucketRepository.findByUser(user).orElse(null);
 
-        Bucket bucket = getUserByPrincipal(principal).getBucket();
-        if (bucket == null)
-            createBucket(user);
-        List<Book> books = bucket.getBooks();
+        if (bucket == null) {
+            bucket = createBucket(user);
+        }
+    List<Book> books = bucket.getBooks();
         List<Integer> bookIds = books.stream().map(Book::getId).toList();
         BucketDto bucketDto = new BucketDto();
         bucketDto.setBooks(bookMapper.fromBookList(getCollectRefProductsByIds(bookIds)));
@@ -131,7 +92,8 @@ public class BucketService {
 
     @Transactional
     public BookDto deleteBook(Integer id, Principal principal) {
-        Bucket bucket = getUserByPrincipal(principal).getBucket();
+        User user =  getUserByPrincipal(principal);
+        Bucket bucket = bucketRepository.findByUser(user).orElse(null);
         Book book = bookRepository.findById(id).orElseThrow(()
             -> new UsernameNotFoundException(""));
         bucket.getBooks().remove(book);

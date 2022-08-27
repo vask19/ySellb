@@ -15,17 +15,19 @@ import java.util.List;
 @Table(name = "users")
 public class User {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String name;
+    private String firstName;
+    private String secondName;
+    private String email;
 
     private String username;
 
     private String password;
 
+    private String phoneNumber;
 
     private boolean isActive;
 
@@ -34,17 +36,5 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Role role;
-
-    @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
-    private Bucket bucket;
-
-
-
-
-
-
-
-
-
 
 }

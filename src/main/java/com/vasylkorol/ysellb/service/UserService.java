@@ -5,11 +5,15 @@ import com.vasylkorol.ysellb.dto.UserDto;
 import com.vasylkorol.ysellb.mapper.UserMapper;
 import com.vasylkorol.ysellb.model.Bucket;
 import com.vasylkorol.ysellb.model.User;
+import com.vasylkorol.ysellb.payload.request.UpdateUserRequest;
 import com.vasylkorol.ysellb.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.security.Principal;
 import java.util.List;
 
 @Service
@@ -34,5 +38,11 @@ public class UserService {
 
     public UserDto getUserById(Integer id) {
         return userMapper.fromUser(userRepository.findFirstById(id).orElse(new User()));
+    }
+
+    @Transactional
+    public UserDto updateUser(User user) {
+        userRepository.save(user);
+        return userMapper.fromUser(user);
     }
 }

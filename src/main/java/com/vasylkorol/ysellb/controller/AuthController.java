@@ -2,6 +2,7 @@ package com.vasylkorol.ysellb.controller;
 import com.vasylkorol.ysellb.dto.UserDto;
 import com.vasylkorol.ysellb.mapper.UserMapper;
 import com.vasylkorol.ysellb.payload.request.LoginRequest;
+import com.vasylkorol.ysellb.payload.request.SignupRequest;
 import com.vasylkorol.ysellb.payload.response.JWTTokenSuccessResponse;
 import com.vasylkorol.ysellb.payload.response.MessageResponse;
 import com.vasylkorol.ysellb.security.JWTUtil;
@@ -59,18 +60,18 @@ public class AuthController {
     }
 
     @PostMapping("/registration")
-    public ResponseEntity<Object> performRegistration(@RequestBody @Valid UserDto userDto,
-                                              BindingResult bindingResult){
+    public ResponseEntity<Object> performRegistration(@RequestBody @Valid SignupRequest signupRequest,
+                                                      BindingResult bindingResult){
 
-        userValidator.validate(userDto,bindingResult);
+        userValidator.validate(signupRequest,bindingResult);
 
         if (bindingResult.hasErrors()){
             return new ResponseEntity<>(new MessageResponse("User with such username already exists"),HttpStatus.CONFLICT);
         }
 
 
-        userDto =  registrationService.register(userDto);
-        String jwt = jwtUtil.generateToken(userDto.getUsername());
+        signupRequest =  registrationService.register(signupRequest);
+        String jwt = jwtUtil.generateToken(signupRequest.getUsername());
         return ResponseEntity.ok(new JWTTokenSuccessResponse(true,jwt));
 
 
