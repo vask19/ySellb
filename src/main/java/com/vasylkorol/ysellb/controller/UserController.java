@@ -22,8 +22,8 @@ public class UserController {
 
 
     @PutMapping("/update")
-    private ResponseEntity<UserDto> updateUser(User user){
-        return new ResponseEntity<>(userService.updateUser(user),HttpStatus.OK);
+    private ResponseEntity<UserDto> updateUser(UserDto userDto){
+        return new ResponseEntity<>(userService.updateUser(userDto),HttpStatus.OK);
     }
 
 

@@ -41,8 +41,8 @@ public class UserService {
     }
 
     @Transactional
-    public UserDto updateUser(User user) {
-        userRepository.save(user);
-        return userMapper.fromUser(user);
+    public UserDto updateUser(UserDto userDto) {
+        userRepository.save(userMapper.toUser(userDto));
+        return userDto;
     }
 }

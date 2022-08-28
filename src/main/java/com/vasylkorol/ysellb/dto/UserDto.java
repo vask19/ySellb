@@ -1,12 +1,11 @@
 package com.vasylkorol.ysellb.dto;
 
+import com.vasylkorol.ysellb.model.Book;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+
 
 @Data
 @NoArgsConstructor
@@ -21,6 +20,7 @@ public class UserDto  {
     private String username;
     private String phoneNumber;
     private boolean isActive;
+
 
 
 

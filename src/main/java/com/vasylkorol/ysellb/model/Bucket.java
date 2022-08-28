@@ -15,15 +15,17 @@ import java.util.List;
 @Table(name = "bucket")
 public class Bucket {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "bucket_id")
     private int id;
 
     @OneToOne
     @JoinColumn(name = "users_id")
     private User user;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(name = "buckets_books",
     joinColumns = @JoinColumn(name = "bucket_id"),
     inverseJoinColumns = @JoinColumn(name = "book_id"))

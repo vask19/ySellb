@@ -1,11 +1,15 @@
 package com.vasylkorol.ysellb.model;
 
 
+import com.sun.istack.Interned;
+import com.vasylkorol.ysellb.model.enums.Language;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.time.Year;
 
 @Data
 @AllArgsConstructor
@@ -22,15 +26,16 @@ public class Book {
     private String description;
     private String author;
     private String publishingHouse;
-    private String language;//enum
-    private String  yearOfPublication;//Year
+    @Enumerated(EnumType.STRING)
+    private Language language;//enum
+    private Integer yearOfPublication;//Year
     private String numberOfPages;
     //TODO
     private String image;
 
 
     @ManyToOne
-    @JoinColumn(name = "users_id", referencedColumnName = "id")
+    @JoinColumn(name = "users_id", referencedColumnName = "users_id")
     private User user;
 
 }
