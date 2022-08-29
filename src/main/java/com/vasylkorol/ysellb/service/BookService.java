@@ -12,8 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -49,9 +51,14 @@ public class BookService {
 
 
     //TODO
+    @Transactional
     public BookDto deleteBook(Integer id, Principal principal) {
-        Book book = bookRepository.getReferenceById(id);
+        System.out.println(0);
+        Book book = bookRepository.findById(id).orElseThrow(()
+            -> new UsernameNotFoundException("11"));
+        System.out.println("1");
         if (book.getUser().getUsername().equals(principal.getName())) {
+            System.out.println(2);
             BookDto bookDto = mapper.fromBook(book);
             bookRepository.delete(book);
             return bookDto;

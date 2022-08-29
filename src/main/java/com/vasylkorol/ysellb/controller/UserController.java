@@ -23,6 +23,7 @@ public class UserController {
 
     @PutMapping("/update")
     private ResponseEntity<UserDto> updateUser(UserDto userDto){
+        System.out.println(userDto);
         return new ResponseEntity<>(userService.updateUser(userDto),HttpStatus.OK);
     }
 

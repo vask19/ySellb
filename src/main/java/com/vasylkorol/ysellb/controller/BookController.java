@@ -42,6 +42,7 @@ public class BookController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<BookDto> deleteBookFromUser(@PathVariable Integer id,Principal principal){
+        System.out.println(1);
         return new ResponseEntity<>(bookService.deleteBook(id,principal),HttpStatus.OK);
 
     }

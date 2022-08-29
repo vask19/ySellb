@@ -42,6 +42,7 @@ public class UserService {
 
     @Transactional
     public UserDto updateUser(UserDto userDto) {
+        System.out.println(userDto);
         userRepository.save(userMapper.toUser(userDto));
         return userDto;
     }

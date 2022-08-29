@@ -15,6 +15,8 @@ import java.time.Year;
 @Builder
 public class BookDto {
 
+    private int id;
+
     private String image;
 
     private String description;
