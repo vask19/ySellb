@@ -35,7 +35,7 @@ CREATE TABLE users
     username     VARCHAR(255),
     password     VARCHAR(255),
     phone_number VARCHAR(255),
-    is_active    BOOLEAN                                  NOT NULL,
+    active       BOOLEAN                                  NOT NULL,
     role         VARCHAR(255),
     CONSTRAINT pk_users PRIMARY KEY (users_id)
 );

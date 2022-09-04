@@ -1,6 +1,5 @@
 package com.vasylkorol.ysellb.dto;
 
-import com.vasylkorol.ysellb.model.Book;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,9 +17,9 @@ public class UserDto  {
     private String secondName;
     private String email;
     private String username;
-    private String password;
     private String phoneNumber;
-    private boolean isActive;
+
+    private boolean active;
 
 
 

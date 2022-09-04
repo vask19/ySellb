@@ -30,9 +30,9 @@ public class User {
 
     private String phoneNumber;
 
-    private boolean isActive;
+    private boolean active = true;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
     private List<Book> books;
 
     @Enumerated(EnumType.STRING)

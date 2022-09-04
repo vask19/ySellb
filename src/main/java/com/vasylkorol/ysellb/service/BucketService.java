@@ -18,7 +18,6 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,7 +47,7 @@ public class BucketService {
                 -> new UsernameNotFoundException("User not exists"));
     }
 
-    private List<Book> getCollectRefProductsByIds(List<Integer> bookIds) {
+    private List<Book> getCollectRefBooksByIds(List<Integer> bookIds) {
         return bookIds.stream()
                 .map(bookRepository::getOne)
                 .collect(Collectors.toList());
@@ -66,7 +65,7 @@ public class BucketService {
             bucket = createBucket(user);}
         List<Book> products = bucket.getBooks();
         List<Book> newProductList = products == null ? new ArrayList<>() : new ArrayList<>(products);
-        newProductList.addAll(getCollectRefProductsByIds(Collections.singletonList(bookId)));
+        newProductList.addAll(getCollectRefBooksByIds(Collections.singletonList(bookId)));
         bucket.setBooks(newProductList);
         bucketRepository.save(bucket);
 
@@ -81,10 +80,10 @@ public class BucketService {
         if (bucket == null) {
             bucket = createBucket(user);
         }
-    List<Book> books = bucket.getBooks();
+        List<Book> books = bucket.getBooks();
         List<Integer> bookIds = books.stream().map(Book::getId).toList();
         BucketDto bucketDto = new BucketDto();
-        bucketDto.setBooks(bookMapper.fromBookList(getCollectRefProductsByIds(bookIds)));
+        bucketDto.setBooks(bookMapper.fromBookList(getCollectRefBooksByIds(bookIds)));
         return bucketDto;
 
     }

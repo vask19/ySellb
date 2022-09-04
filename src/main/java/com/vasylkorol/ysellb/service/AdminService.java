@@ -8,9 +8,9 @@ import com.vasylkorol.ysellb.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
-import java.util.List;
+
+
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +22,7 @@ public class AdminService {
 
 
     @Transactional
-    public UserDto putUserStatus(Integer id,boolean isActive) {
+    public UserDto putUsersStatus(Integer id,boolean isActive) {
         User user = userRepository.findFirstById(id).orElseThrow(()
             -> new UsernameNotFoundException(""));
         user.setActive(isActive);

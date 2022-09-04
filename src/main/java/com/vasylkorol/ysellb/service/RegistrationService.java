@@ -1,8 +1,6 @@
 package com.vasylkorol.ysellb.service;
 
-import com.vasylkorol.ysellb.dto.UserDto;
 import com.vasylkorol.ysellb.mapper.SignupMapper;
-import com.vasylkorol.ysellb.mapper.UserMapper;
 import com.vasylkorol.ysellb.model.User;
 import com.vasylkorol.ysellb.model.enums.Role;
 import com.vasylkorol.ysellb.payload.request.SignupRequest;

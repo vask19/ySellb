@@ -1,6 +1,5 @@
 package com.vasylkorol.ysellb.config;
 
-import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.vasylkorol.ysellb.model.User;
 import com.vasylkorol.ysellb.security.CustomUserDetails;
 import com.vasylkorol.ysellb.security.JWTUtil;

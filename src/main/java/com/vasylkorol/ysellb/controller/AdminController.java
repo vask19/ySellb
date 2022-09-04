@@ -24,12 +24,12 @@ public class AdminController {
 
     @PutMapping("users/{id}/block")
     public ResponseEntity<UserDto> blockUser(@PathVariable("id") Integer id){
-        return new ResponseEntity<>(adminService.putUserStatus(id,false),HttpStatus.OK);
+        return new ResponseEntity<>(adminService.putUsersStatus(id,false),HttpStatus.OK);
     }
 
     @PutMapping("users/{id}/unblock")
     public ResponseEntity<UserDto> unBlockUser(@PathVariable("id") Integer id){
-        return new ResponseEntity<>(adminService.putUserStatus(id,true),HttpStatus.OK);
+        return new ResponseEntity<>(adminService.putUsersStatus(id,true),HttpStatus.OK);
     }
 
 
