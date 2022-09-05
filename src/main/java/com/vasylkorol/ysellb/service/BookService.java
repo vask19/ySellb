@@ -1,21 +1,23 @@
 package com.vasylkorol.ysellb.service;
-
 import com.vasylkorol.ysellb.dto.BookDto;
 import com.vasylkorol.ysellb.mapper.BookMapper;
 import com.vasylkorol.ysellb.model.Book;
+import com.vasylkorol.ysellb.model.Image;
 import com.vasylkorol.ysellb.model.User;
 import com.vasylkorol.ysellb.repository.BookRepository;
+import com.vasylkorol.ysellb.repository.ImageRepository;
 import com.vasylkorol.ysellb.repository.UserRepository;
 import com.vasylkorol.ysellb.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
+import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.security.Principal;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,17 +26,45 @@ public class BookService {
     private final BookRepository bookRepository;
     private final UserRepository userRepository;
     private final BookMapper mapper = BookMapper.MAPPER;
+    private final ImageRepository imageRepository;
 
 
     public List<BookDto> getAll() {
         return mapper.fromBookList(bookRepository.findAll());
     }
 
-    public BookDto saveNewBook(BookDto bookDto,CustomUserDetails principal) {
+    public BookDto saveNewBook(BookDto bookDto, CustomUserDetails principal, MultipartFile[] multipartFiles) {
         Book book = mapper.toBook(bookDto);
+        List<Image> images = Arrays.stream(multipartFiles)
+                .filter(el -> el.getSize() != 0)
+                .map(this::toImageEntity)
+                .toList();
+        images.forEach(image -> {
+            image.setBook(book);
+            book.getImages().add(image);});
+        images.get(0).setPreviewImage(true);
         book.setUser(getUserByPrincipal(principal));
+        Book bookFromDb = bookRepository.save(book);
+        bookFromDb.setPreviewImageId(bookFromDb.getImages().get(0).getId());
+        bookRepository.save(book);
+
 
         return mapper.fromBook(bookRepository.save(book));
+    }
+
+    private Image toImageEntity(MultipartFile file){
+        try {
+            return Image.builder()
+                    .name(file.getName())
+                    .originalFileName(file.getOriginalFilename())
+                    .contentType(file.getContentType())
+                    .size(file.getSize())
+                    .bytes(file.getBytes())
+                    .build();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new Image();
+        }
     }
 
 

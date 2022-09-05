@@ -9,7 +9,10 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.time.Year;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -37,5 +40,16 @@ public class Book {
     @ManyToOne
     @JoinColumn(name = "users_id", referencedColumnName = "users_id")
     private User user;
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,
+        mappedBy = "book")
+    private List<Image> images = new ArrayList<>();
+    private Long previewImageId;
+    private LocalDateTime dateOfCreated;
+
+    @PrePersist
+    private void init(){
+        dateOfCreated = LocalDateTime.now();
+    }
 
 }

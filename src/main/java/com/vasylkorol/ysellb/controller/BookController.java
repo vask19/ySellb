@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -31,12 +32,17 @@ public class BookController {
     }
 
 
+    @ResponseBody
     @PostMapping("/add")
-    public ResponseEntity<BookDto> createBook(@RequestBody BookDto bookDto){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    public ResponseEntity<BookDto> createBook(@RequestPart("files") MultipartFile[] files,
+                                              @RequestPart("book") BookDto bookDto
+                                              ){
+
+//        return ResponseEntity.ok(new BookDto());
+               Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
 
-       return new ResponseEntity<>(bookService.saveNewBook(bookDto,principal),HttpStatus.OK);
+       return new ResponseEntity<>(bookService.saveNewBook(bookDto,principal,files),HttpStatus.OK);
 
     }
 
