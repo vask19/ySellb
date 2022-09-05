@@ -38,8 +38,7 @@ public class BookController {
                                               @RequestPart("book") BookDto bookDto
                                               ){
 
-//        return ResponseEntity.ok(new BookDto());
-               Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
 
        return new ResponseEntity<>(bookService.saveNewBook(bookDto,principal,files),HttpStatus.OK);
