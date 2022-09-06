@@ -29,16 +29,30 @@ repositories {
 }
 
 dependencies {
+
+    //data jpa
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    //security
     implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
     implementation 'org.springframework.boot:spring-boot-starter-security'
-    compileOnly 'org.projectlombok:lombok'
+
+    //thymeleaf
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+    //web
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    //postgresql
     runtimeOnly 'org.postgresql:postgresql'
+
+    //lombok
     annotationProcessor 'org.projectlombok:lombok'
+    compileOnly 'org.projectlombok:lombok'
+
+    //test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
 
@@ -53,8 +67,18 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
     //JWT
-    // https://mvnrepository.com/artifact/com.auth0/java-jwt
     implementation 'com.auth0:java-jwt:4.0.0'
+
+    //mail
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail
+    implementation 'org.springframework.boot:spring-boot-starter-mail:2.7.2'
+
+    // https://mvnrepository.com/artifact/org.springframework/spring-context-support
+    implementation 'org.springframework:spring-context-support:5.3.22'
+
+
+
+
 
 
 

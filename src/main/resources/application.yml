@@ -21,3 +21,14 @@ spring:
     baseline-on-migrate: true
 
 jwt-secret: "QmZPrNuuujH87_poi12985JJhjr"
+
+
+mail:
+  host: smtp.gmail.com
+  port: 587
+  properties:
+     mail smtp.auth: true
+     smtp.starttls.enable: true
+  username: ""
+  password: ""
+
