@@ -6,6 +6,8 @@ import com.vasylkorol.ysellb.model.enums.Language;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -33,11 +35,10 @@ public class Book {
     private Language language;//enum
     private Integer yearOfPublication;//Year
     private String numberOfPages;
-    //TODO
-    private String image;
 
 
-    @ManyToOne
+
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "users_id", referencedColumnName = "users_id")
     private User user;
 
@@ -51,5 +52,6 @@ public class Book {
     private void init(){
         dateOfCreated = LocalDateTime.now();
     }
+
 
 }

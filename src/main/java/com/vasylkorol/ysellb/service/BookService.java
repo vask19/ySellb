@@ -83,12 +83,9 @@ public class BookService {
     //TODO
     @Transactional
     public BookDto deleteBook(Integer id, Principal principal) {
-        System.out.println(0);
         Book book = bookRepository.findById(id).orElseThrow(()
             -> new UsernameNotFoundException("11"));
-        System.out.println("1");
         if (book.getUser().getUsername().equals(principal.getName())) {
-            System.out.println(2);
             BookDto bookDto = mapper.fromBook(book);
             bookRepository.delete(book);
             return bookDto;

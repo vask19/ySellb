@@ -28,7 +28,6 @@ public class UserValidator implements Validator {
 
         //TODO : create equals service
         SignupRequest user = (SignupRequest) target;
-        System.out.println(target);
         try {
             userDetailsService.loadUserByUsername(user.getUsername());
 

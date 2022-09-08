@@ -2,6 +2,7 @@ package com.vasylkorol.ysellb.payload.request;
 
 import lombok.Data;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
@@ -23,6 +24,7 @@ public class SignupRequest {
     private String secondName;
 
     @NotEmpty
+    @Email
     private String email;
 
     private String phoneNumber;

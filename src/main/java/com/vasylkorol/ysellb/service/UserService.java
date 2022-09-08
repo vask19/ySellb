@@ -6,7 +6,6 @@ import com.vasylkorol.ysellb.mapper.UserMapper;
 import com.vasylkorol.ysellb.model.Book;
 import com.vasylkorol.ysellb.model.Bucket;
 import com.vasylkorol.ysellb.model.User;
-import com.vasylkorol.ysellb.payload.request.UpdateUserRequest;
 import com.vasylkorol.ysellb.repository.BookRepository;
 import com.vasylkorol.ysellb.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

@@ -46,14 +46,6 @@ public class AuthController {
         } catch (BadCredentialsException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
-//        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-//                loginRequest.getUsername(),
-//                loginRequest.getPassword()
-//        ));
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-
         String jwt = jwtUtil.generateToken(loginRequest.getUsername());
 
         return ResponseEntity.ok(new JWTTokenSuccessResponse(true,jwt));
