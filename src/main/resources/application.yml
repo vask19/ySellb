@@ -1,34 +1,38 @@
 spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ysellb99@gmail.com
+    password: zucjvetwrimuwdkj
+    test-connection: true
 
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    sender:
+      email: no-reply@gmail.com
+      text: no-reply
 
   datasource:
-
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5433/postgres
     username: postgres
     password: pass
     dbcp2:
       default-schema: public
-
-
   jpa:
     hibernate:
 
       ddl-auto: validate
     show-sql: true
-
   flyway:
     baseline-on-migrate: true
-
 jwt-secret: "QmZPrNuuujH87_poi12985JJhjr"
 
 
-mail:
-  host: smtp.gmail.com
-  port: 587
-  properties:
-     mail smtp.auth: true
-     smtp.starttls.enable: true
-  username: ""
-  password: ""
+
+
 
