@@ -31,6 +31,8 @@ public class User {
     private String phoneNumber;
 
     private boolean active = true;
+    private boolean activeEmail;
+    private int emailActivationCode;
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
     private List<Book> books;
