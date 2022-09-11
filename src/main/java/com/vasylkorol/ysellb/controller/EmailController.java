@@ -27,16 +27,15 @@ public class EmailController {
 
     }
 
-    @GetMapping("/activation")
+    @GetMapping("/activation/send")
     public ResponseEntity<String> sendActivationCode(Principal principal){
         UserDto userDto = emailService.sendCodeForActivationEmailToUserEmail(principal);
-
         return ResponseEntity.ok("Code was send on email: " + userDto.getEmail());
     }
 
     @GetMapping("/activation/check")
     public ResponseEntity<String> activationUsersEmail(@RequestParam("code") Integer code,Principal principal){
-        UserDto userDto = emailService.activationUserEmail(principal,code);
+        UserDto userDto = emailService.activationUsersEmail(principal,code);
         return ResponseEntity.ok("Your email activated");
     }
 }

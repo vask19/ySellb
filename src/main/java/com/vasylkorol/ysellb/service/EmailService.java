@@ -45,7 +45,6 @@ public class EmailService {
         User user = getUserByPrincipal(principal);
         int code = (new Random().nextInt(100000,900000));
         user.setEmailActivationCode(code);
-        user.setRole(Role.ROLE_USER);
         String text = "Your registration code: " + code;
         EmailReceiver emailReceiver = new EmailReceiver();
         emailReceiver.setEmails(Collections.singletonList(user.getEmail()));
@@ -55,10 +54,13 @@ public class EmailService {
         userRepository.save(user);
         return userMapper.fromUser(user);
     }
-    public UserDto activationUserEmail(Principal principal,Integer userAuthCode){
+    @Transactional
+    public UserDto activationUsersEmail(Principal principal,Integer userAuthCode){
         User user = getUserByPrincipal(principal);
         if (user.getEmailActivationCode() == userAuthCode){
             user.setActiveEmail(true);
+            user.setRole(Role.ROLE_USER);
+            userRepository.save(user);
         }
         return userMapper.fromUser(user);
 

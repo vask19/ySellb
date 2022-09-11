@@ -2,8 +2,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: 
-    password: 
+    username: ysellb13@gmail.com
+    password: sfdunlujnasmbyli
     test-connection: true
 
     properties:
