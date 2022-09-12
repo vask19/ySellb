@@ -9,6 +9,7 @@ import com.vasylkorol.ysellb.payload.request.EmailReceiver;
 import com.vasylkorol.ysellb.payload.request.SignupRequest;
 import com.vasylkorol.ysellb.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,15 +23,11 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class RegistrationService {
-
-
-
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final SignupMapper signupMapper = SignupMapper.MAPPER;
-
-
 
     @Transactional
     public SignupRequest register(SignupRequest signupRequest) {
@@ -39,8 +36,7 @@ public class RegistrationService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole(Role.ROLE_NOT_CONFIRMED_USER);
         userRepository.save(user);
-
-
+        log.info( "Registered a new user");
         return signupMapper.fromUser(user);
     }
 

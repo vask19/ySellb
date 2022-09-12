@@ -1,5 +1,4 @@
 package com.vasylkorol.ysellb.service;
-
 import com.vasylkorol.ysellb.dto.BookDto;
 import com.vasylkorol.ysellb.dto.BucketDto;
 import com.vasylkorol.ysellb.mapper.BookMapper;
@@ -10,9 +9,9 @@ import com.vasylkorol.ysellb.repository.BookRepository;
 import com.vasylkorol.ysellb.repository.BucketRepository;
 import com.vasylkorol.ysellb.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.security.Principal;
 import java.util.ArrayList;
@@ -22,26 +21,23 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class BucketService {
-
-
     private final BucketRepository bucketRepository;
     private final UserService userService;
     private final UserRepository userRepository;
     private final BookRepository bookRepository;
     private final BookMapper bookMapper = BookMapper.MAPPER;
 
-
     @Transactional
     public Bucket createBucket(User user) {
         Bucket bucket = new Bucket();
         bucket.setUser(user);
         bucket.setBooks(new ArrayList<>());
+        log.info( "Created bucket to user");
         return bucketRepository.save(bucket);
 
     }
-
-
     public User getUserByPrincipal(Principal principal) {
         return userRepository.findFirstByUsername(principal.getName()).orElseThrow(()
                 -> new UsernameNotFoundException("User not exists"));
@@ -52,9 +48,6 @@ public class BucketService {
                 .map(bookRepository::getOne)
                 .collect(Collectors.toList());
     }
-
-
-
 
     @Transactional
     public BookDto addBook(Integer bookId, Principal principal) {
@@ -68,7 +61,7 @@ public class BucketService {
         newProductList.addAll(getCollectRefBooksByIds(Collections.singletonList(bookId)));
         bucket.setBooks(newProductList);
         bucketRepository.save(bucket);
-
+        log.info( "Added book to bucket");
         return bookMapper.fromBook(bookRepository.getReferenceById(bookId));
 
     }
@@ -87,8 +80,6 @@ public class BucketService {
         return bucketDto;
 
     }
-
-
     @Transactional
     public BookDto deleteBook(Integer id, Principal principal) {
         User user =  getUserByPrincipal(principal);
@@ -97,14 +88,10 @@ public class BucketService {
             -> new UsernameNotFoundException(""));
         bucket.getBooks().remove(book);
         bucketRepository.save(bucket);
+        log.info( "Delete book from bucket");
+
         return bookMapper.fromBook(book);
 
     }
 }
-
-
-
-
-
-
 

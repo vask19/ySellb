@@ -9,6 +9,7 @@ import com.vasylkorol.ysellb.repository.ImageRepository;
 import com.vasylkorol.ysellb.repository.UserRepository;
 import com.vasylkorol.ysellb.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,22 +18,20 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class BookService {
-
     private final BookRepository bookRepository;
     private final UserRepository userRepository;
     private final BookMapper mapper = BookMapper.MAPPER;
     private final ImageRepository imageRepository;
 
-
     public List<BookDto> getAll() {
         return mapper.fromBookList(bookRepository.findAll());
     }
 
+    @Transactional
     public BookDto saveNewBook(BookDto bookDto, CustomUserDetails principal, MultipartFile[] multipartFiles) {
         Book book = mapper.toBook(bookDto);
         List<Image> images = Arrays.stream(multipartFiles)
@@ -47,8 +46,7 @@ public class BookService {
         Book bookFromDb = bookRepository.save(book);
         bookFromDb.setPreviewImageId(bookFromDb.getImages().get(0).getId());
         bookRepository.save(book);
-
-
+        log.info( "Saved a new book");
         return mapper.fromBook(bookRepository.save(book));
     }
 
@@ -71,14 +69,12 @@ public class BookService {
     public User getUserByPrincipal(CustomUserDetails principal){
         return userRepository.findFirstByUsername(principal.getUser().getUsername())
                 .orElseThrow(() ->  new UsernameNotFoundException("User not found"));
-
-
     }
 
     public BookDto getBook(int id) {
+        log.info("Gat a book");
         return mapper.fromBook(bookRepository.findById(id).orElse(new Book()));
     }
-
 
     //TODO
     @Transactional

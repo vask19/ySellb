@@ -1,10 +1,8 @@
 package com.vasylkorol.ysellb.model;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 
 @Entity
@@ -13,7 +11,6 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 public class Image {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "image_id")
@@ -27,7 +24,5 @@ public class Image {
     private byte[] bytes;
     @ManyToOne(cascade = CascadeType.REFRESH,fetch = FetchType.EAGER)
     private Book book;
-
-
 
 }

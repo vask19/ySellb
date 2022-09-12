@@ -1,7 +1,4 @@
 package com.vasylkorol.ysellb.util;
-
-import com.vasylkorol.ysellb.dto.UserDto;
-import com.vasylkorol.ysellb.model.User;
 import com.vasylkorol.ysellb.payload.request.SignupRequest;
 import com.vasylkorol.ysellb.service.CustomUserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;

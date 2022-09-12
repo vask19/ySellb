@@ -1,10 +1,7 @@
 package com.vasylkorol.ysellb.model;
-
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -14,17 +11,13 @@ import java.util.List;
 @Entity
 @Table(name = "bucket")
 public class Bucket {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "bucket_id")
     private int id;
-
     @OneToOne
     @JoinColumn(name = "users_id")
     private User user;
-
     @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @JoinTable(name = "buckets_books",
     joinColumns = @JoinColumn(name = "bucket_id"),

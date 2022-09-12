@@ -14,29 +14,21 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "users_id")
     private int id;
-
     private String firstName;
     private String secondName;
     private String email;
-
     private String username;
-
     private String password;
-
     private String phoneNumber;
-
     private boolean active = true;
     private boolean activeEmail;
     private int emailActivationCode;
-
     @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
     private List<Book> books;
-
     @Enumerated(EnumType.STRING)
     private Role role;
 
