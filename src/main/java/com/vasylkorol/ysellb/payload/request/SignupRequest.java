@@ -1,5 +1,6 @@
 package com.vasylkorol.ysellb.payload.request;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
@@ -7,6 +8,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 @Data
+@Builder
 public class SignupRequest {
     @NotEmpty(message = "The name cannot be empty")
     @Size(min = 2,max = 100,message = "The name must be in the range from 2 to 100 characters")

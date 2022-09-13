@@ -70,15 +70,14 @@ dependencies {
     implementation 'com.auth0:java-jwt:4.0.0'
 
     //mail
-    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail
     implementation 'org.springframework.boot:spring-boot-starter-mail:2.7.2'
 
     // https://mvnrepository.com/artifact/org.springframework/spring-context-support
     implementation 'org.springframework:spring-context-support:5.3.22'
 
 
-// https://mvnrepository.com/artifact/org.mockito/mockito-core
-    testImplementation 'org.mockito:mockito-core:4.7.0'
+    //mockito
+    testImplementation 'org.mockito:mockito-core:4.8.0'
 
 
 
