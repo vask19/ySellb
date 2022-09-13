@@ -34,4 +34,7 @@ public class BookDto {
     private String numberOfPages;
 
 
+    public BookDto(Integer bookId) {
+        this.id = bookId;
+    }
 }

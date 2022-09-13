@@ -26,12 +26,15 @@ spring:
   jpa:
     hibernate:
 
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: true
   flyway:
     baseline-on-migrate: true
 jwt-secret: "QmZPrNuuujH87_poi12985JJhjr"
-
+logging:
+  file:
+    path: /
+    name: ysellb.log
 
 
 

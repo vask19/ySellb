@@ -3,6 +3,8 @@ import com.vasylkorol.ysellb.model.enums.Language;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -36,6 +38,11 @@ public class Book {
     private List<Image> images = new ArrayList<>();
     private Long previewImageId;
     private LocalDateTime dateOfCreated;
+
+    public Book(Integer bookId) {
+        this.id = bookId;
+    }
+
     @PrePersist
     private void init(){
         dateOfCreated = LocalDateTime.now();

@@ -28,7 +28,12 @@ public class BookService {
     private final ImageRepository imageRepository;
 
     public List<BookDto> getAll() {
+
         return mapper.fromBookList(bookRepository.findAll());
+    }
+
+    public BookDto saveBook(BookDto bookDto){
+        return mapper.fromBook(bookRepository.save(mapper.toBook(bookDto)));
     }
 
     @Transactional
