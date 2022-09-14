@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -42,4 +43,13 @@ public class MessageService {
                 -> new UsernameNotFoundException("User not exists"));
     }
 
+    public List<Message> getAllMessageWithUserById(Principal principal, Integer recipientId) {
+       User sender = getUserByPrincipal(principal);
+       User recipient = userRepository.findFirstById(recipientId).orElseThrow(
+               () -> new UsernameNotFoundException("Recipient not fount ")
+       );
+        var messages = messageRepository.findByRecipientAndSender(sender,recipient);
+        messages.addAll(messageRepository.findByRecipientAndSender(recipient,sender));
+       return  messages;
+    }
 }

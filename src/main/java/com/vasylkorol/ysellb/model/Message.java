@@ -1,12 +1,10 @@
 package com.vasylkorol.ysellb.model;
-
-import com.vasylkorol.ysellb.model.enums.Language;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -26,7 +24,15 @@ public class Message {
     @JoinColumn(name = "recipient_id")
     private User recipient;
 
+    //TODO
+    private LocalDateTime dateOfCreated
+            = LocalDateTime.now();
+
     private String text;
+
+
+
+
 
 
 }
