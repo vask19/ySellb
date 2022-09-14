@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -31,5 +32,9 @@ public class User {
     private List<Book> books;
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @Builder.Default
+    @OneToMany(mappedBy = "user")
+    private List<UserChat> userChats = new ArrayList<>();
 
 }
