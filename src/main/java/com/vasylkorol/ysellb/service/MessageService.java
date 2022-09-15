@@ -48,8 +48,8 @@ public class MessageService {
        User recipient = userRepository.findFirstById(recipientId).orElseThrow(
                () -> new UsernameNotFoundException("Recipient not fount ")
        );
-        var messages = messageRepository.findByRecipientAndSender(sender,recipient);
-        messages.addAll(messageRepository.findByRecipientAndSender(recipient,sender));
+         messageRepository.findByRecipientAndSender(sender,recipient);
+        var messages = messageRepository.findByRecipientAndSenderOrSenderAndRecipient(sender,recipient);
        return  messages;
     }
 }
