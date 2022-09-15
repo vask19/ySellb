@@ -33,8 +33,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @Builder.Default
-    @OneToMany(mappedBy = "user")
-    private List<UserChat> userChats = new ArrayList<>();
+
 
 }

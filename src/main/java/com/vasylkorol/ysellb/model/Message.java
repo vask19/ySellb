@@ -29,6 +29,10 @@ public class Message {
 
     private String text;
 
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "chat_id",referencedColumnName = "chat_id")
+    private Chat chat;
+
 
 
 
