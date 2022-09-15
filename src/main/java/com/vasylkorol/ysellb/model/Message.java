@@ -25,8 +25,7 @@ public class Message {
     private User recipient;
 
     //TODO
-    private LocalDateTime dateOfCreated
-            = LocalDateTime.now();
+    private LocalDateTime dateOfCreate;
 
     private String text;
 

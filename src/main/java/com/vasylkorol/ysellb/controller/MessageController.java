@@ -1,5 +1,6 @@
 package com.vasylkorol.ysellb.controller;
 
+import com.vasylkorol.ysellb.dto.MessageDto;
 import com.vasylkorol.ysellb.model.Message;
 import com.vasylkorol.ysellb.service.MessageService;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,7 @@ public class MessageController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<List<Message>> getAllMessagesWithUserById(@PathVariable("id") Integer recipientId,Principal principal){
+    public ResponseEntity<List<MessageDto>> getAllMessagesWithUserById(@PathVariable("id") Integer recipientId, Principal principal){
         var messages = messageService.getAllMessageWithUserById(principal,recipientId);
         return ResponseEntity.ok(messages);
     }
