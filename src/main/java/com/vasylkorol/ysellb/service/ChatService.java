@@ -1,7 +1,8 @@
 package com.vasylkorol.ysellb.service;
 
+import com.vasylkorol.ysellb.dto.ChatDto;
 import com.vasylkorol.ysellb.dto.MessageDto;
-import com.vasylkorol.ysellb.dto.UserDto;
+import com.vasylkorol.ysellb.mapper.ChatMapper;
 import com.vasylkorol.ysellb.mapper.MessageMapper;
 import com.vasylkorol.ysellb.model.Chat;
 import com.vasylkorol.ysellb.model.Message;
@@ -18,21 +19,19 @@ import javax.transaction.Transactional;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class MessageService {
+public class ChatService {
     private final MessageRepository messageRepository;
     private final UserRepository userRepository;
     private final ChatRepository chatRepository;
     private final MessageMapper messageMapper = MessageMapper.MAPPER;
-
+    private final ChatMapper chatMapper = ChatMapper.MAPPER;
 
     @Transactional
-    public Message sendMessage(Principal principal, Integer recipientId,String messageText){
+    public MessageDto sendMessage(Principal principal, Integer recipientId,String messageText){
         User sender = getUserByPrincipal(principal);
         User recipient = userRepository.findFirstById(recipientId).orElseThrow(
                 () -> new UsernameNotFoundException("Recipient not found")
@@ -56,7 +55,7 @@ public class MessageService {
         chat.getMessages().add(message);
         chatRepository.save(chat);
         log.info("User {} sent message to uses {}", sender.getUsername(),recipient.getUsername());
-        return message;
+        return messageMapper.fromMessage(message);
 
     }
 
@@ -65,12 +64,14 @@ public class MessageService {
                 -> new UsernameNotFoundException("User not exists"));
     }
 
-//    public List<MessageDto> getAllMessageWithUserById(Principal principal, Integer recipientId) {
-//       User sender = getUserByPrincipal(principal);
-//       User recipient = userRepository.findFirstById(recipientId).orElseThrow(
-//               () -> new UsernameNotFoundException("Recipient not fount ")
-//       );
-//        return messageMapper.fromMessageList(
-//                messageRepository.findByRecipientAndSenderOrSenderAndRecipient(sender,recipient));
-//    }
+    public ChatDto getChat(Principal principal, Integer recipientId) {
+       User sender = getUserByPrincipal(principal);
+       User recipient = userRepository.findFirstById(recipientId).orElseThrow(
+               () -> new UsernameNotFoundException("Recipient not fount ")
+       );
+        Chat chat = chatRepository.findByRecipientAndSenderOrSenderAndRecipient(sender,recipient)
+                .orElseThrow(() -> new UsernameNotFoundException("Chat not found"));
+        return chatMapper.fromChat(chat);
+
+    }
 }
