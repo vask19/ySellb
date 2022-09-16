@@ -15,20 +15,11 @@ public class Message {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "message_id")
     private int id;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sender_id")
-    private User sender;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "recipient_id")
-    private User recipient;
-
     //TODO
     private LocalDateTime dateOfCreate;
-
     private String text;
-
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "chat_id",referencedColumnName = "chat_id")
     private Chat chat;
