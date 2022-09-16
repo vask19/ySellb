@@ -13,8 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class MessageDto {
-    private Integer senderId;
-    private Integer recipientId;
+    private int id;
     private String text;
     private LocalDateTime dateOfCreate;
 }

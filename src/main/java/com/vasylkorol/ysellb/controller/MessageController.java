@@ -20,13 +20,14 @@ public class MessageController {
 
     @PostMapping("/{id}")
     public ResponseEntity<String > sendMessage(@PathVariable("id") Integer id, Principal principal,@RequestBody String messageText){
+
         Message message = messageService.sendMessage(principal,id,messageText);
         return ResponseEntity.ok(message.getText());
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<List<MessageDto>> getAllMessagesWithUserById(@PathVariable("id") Integer recipientId, Principal principal){
-        var messages = messageService.getAllMessageWithUserById(principal,recipientId);
-        return ResponseEntity.ok(messages);
-    }
+//    @GetMapping("{id}")
+//    public ResponseEntity<List<MessageDto>> getAllMessagesWithUserById(@PathVariable("id") Integer recipientId, Principal principal){
+//        var messages = messageService.getAllMessageWithUserById(principal,recipientId);
+//        return ResponseEntity.ok(messages);
+//    }
 }

@@ -1,6 +1,7 @@
 package com.vasylkorol.ysellb.model;
 
 
+import com.vasylkorol.ysellb.dto.MessageDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,5 +31,4 @@ public class Chat {
 
     @OneToMany(mappedBy = "chat",cascade = CascadeType.ALL)
     private List<Message> messages;
-    private int idd;
 }
