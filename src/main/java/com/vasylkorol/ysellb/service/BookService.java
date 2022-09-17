@@ -49,9 +49,10 @@ public class BookService {
         images.get(0).setPreviewImage(true);
         book.setUser(getUserByPrincipal(principal));
         Book bookFromDb = bookRepository.save(book);
+        log.info("a new book with photos was saved");
         bookFromDb.setPreviewImageId(bookFromDb.getImages().get(0).getId());
         bookRepository.save(book);
-        log.info( "Saved a new book");
+        log.info( "a new book with preview photo was saved");
         return mapper.fromBook(bookRepository.save(book));
     }
 
@@ -77,7 +78,6 @@ public class BookService {
     }
 
     public BookDto getBook(int id) {
-        log.info("Gat a book");
         return mapper.fromBook(bookRepository.findById(id).orElse(new Book()));
     }
 
@@ -89,6 +89,7 @@ public class BookService {
         if (book.getUser().getUsername().equals(principal.getName())) {
             BookDto bookDto = mapper.fromBook(book);
             bookRepository.delete(book);
+            log.info("a book was deleted");
             return bookDto;
         }
         else return new BookDto();

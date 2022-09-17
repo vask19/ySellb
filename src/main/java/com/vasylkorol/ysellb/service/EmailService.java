@@ -36,7 +36,7 @@ public class EmailService {
             message.setTo(email);
             javaMailSender.send(message);
         });
-        log.info("Email was sent");
+        log.info("Emails were sent");
     }
 
     @Transactional
@@ -51,7 +51,7 @@ public class EmailService {
         emailReceiver.setText(text);
         sendEmailWithText(emailReceiver);
         userRepository.save(user);
-        log.info("Email with activation code  was sent to user");
+        log.info("Email with activation code was sent to user");
         return userMapper.fromUser(user);
     }
     @Transactional
@@ -61,7 +61,8 @@ public class EmailService {
             user.setActiveEmail(true);
             user.setRole(Role.ROLE_USER);
             userRepository.save(user);
-            log.info("User sent her activation code to application ");
+            log.info("User sent him activation code to application ");
+            log.info("user was activated");
         }
         else log.info("User sent a false activation code");
         return userMapper.fromUser(user);

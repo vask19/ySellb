@@ -46,7 +46,7 @@ public class UserService {
         newUser.setBooks(user.getBooks() == null ? new ArrayList<>() : user.getBooks());
         newUser.setRole(user.getRole());
         userRepository.save(newUser);
-        log.info( "Updated a user info");
+        log.info( "user with updated info was saved");
         return userDto;
     }
 }

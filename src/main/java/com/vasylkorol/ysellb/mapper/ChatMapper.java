@@ -20,11 +20,8 @@ public interface ChatMapper {
     @Mapping(target = "messages",source = "messageDtoList")
     Chat toChat(ChatDto chatDto);
 
-
-
     @Mapping(target = "messageDtoList",source = "messages")
     ChatDto fromChat(Chat chat);
-
     List<Message> toMessageList(List<MessageDto> messageDtoList);
 
 

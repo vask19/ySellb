@@ -60,8 +60,9 @@ public class BucketService {
         List<Book> newProductList = products == null ? new ArrayList<>() : new ArrayList<>(products);
         newProductList.addAll(getCollectRefBooksByIds(Collections.singletonList(bookId)));
         bucket.setBooks(newProductList);
-        bucketRepository.save(bucket);
         log.info( "Added book to bucket");
+        bucketRepository.save(bucket);
+        log.info("bucket saved");
         return bookMapper.fromBook(bookRepository.getReferenceById(bookId));
 
     }
@@ -87,8 +88,9 @@ public class BucketService {
         Book book = bookRepository.findById(id).orElseThrow(()
             -> new UsernameNotFoundException(""));
         bucket.getBooks().remove(book);
+        log.info( "a book from bucket was deleted ");
         bucketRepository.save(bucket);
-        log.info( "Delete book from bucket");
+        log.info("a bucket was saved");
 
         return bookMapper.fromBook(book);
 

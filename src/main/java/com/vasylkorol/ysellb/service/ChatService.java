@@ -52,8 +52,10 @@ public class ChatService {
                 .chat(chat)
                 .build();
         messageRepository.save(message);
+        log.info("a message was  saved");
         chat.getMessages().add(message);
         chatRepository.save(chat);
+        log.info("a chat was  saved");
         log.info("User {} sent message to uses {}", sender.getUsername(),recipient.getUsername());
         return messageMapper.fromMessage(message);
 

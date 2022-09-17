@@ -32,6 +32,7 @@ public class RegistrationService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole(Role.ROLE_NOT_CONFIRMED_USER);
         userRepository.save(user);
+        log.info("user was saved");
         log.info( "Registered a new user");
         return signupMapper.fromUser(user);
     }
