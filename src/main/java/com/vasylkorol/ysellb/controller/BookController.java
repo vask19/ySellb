@@ -16,12 +16,12 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/book")
+@RequestMapping("/api/books")
 @RequiredArgsConstructor
 public class BookController {
 
     private final BookService bookService;
-    @GetMapping("/all")
+    @GetMapping("")
     public ResponseEntity<List<BookDto>> getAll(){
         return new ResponseEntity<>(bookService.getAll(), HttpStatus.OK);
     }
@@ -31,7 +31,6 @@ public class BookController {
         return ResponseEntity.ok(bookService.getBook(id));
     }
 
-
     @ResponseBody
     @PostMapping("/add")
     public ResponseEntity<BookDto> createBook(@RequestPart("files") MultipartFile[] files,
@@ -40,14 +39,11 @@ public class BookController {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
-
        return new ResponseEntity<>(bookService.saveNewBook(bookDto,principal,files),HttpStatus.OK);
-
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<BookDto> deleteBookFromUser(@PathVariable Integer id,Principal principal){
-        System.out.println(1);
         return new ResponseEntity<>(bookService.deleteBook(id,principal),HttpStatus.OK);
 
     }

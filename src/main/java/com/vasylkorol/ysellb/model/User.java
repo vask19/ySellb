@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -28,7 +27,7 @@ public class User {
     private boolean active = true;
     private boolean activeEmail;
     private int emailActivationCode;
-    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "user",cascade = CascadeType.REFRESH)
     private List<Book> books;
     @Enumerated(EnumType.STRING)
     private Role role;

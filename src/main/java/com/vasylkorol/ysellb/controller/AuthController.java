@@ -1,5 +1,4 @@
 package com.vasylkorol.ysellb.controller;
-import com.vasylkorol.ysellb.dto.UserDto;
 import com.vasylkorol.ysellb.mapper.UserMapper;
 import com.vasylkorol.ysellb.payload.request.LoginRequest;
 import com.vasylkorol.ysellb.payload.request.SignupRequest;
@@ -30,9 +29,7 @@ public class AuthController {
     private final JWTUtil jwtUtil;
     private final UserMapper userMapper = UserMapper.MAPPER;
     private final RegistrationService registrationService;
-
     private final AuthenticationManager authenticationManager;
-
     private final UserValidator userValidator;
 
 
@@ -65,9 +62,6 @@ public class AuthController {
         signupRequest =  registrationService.register(signupRequest);
         String jwt = jwtUtil.generateToken(signupRequest.getUsername());
         return ResponseEntity.ok(new JWTTokenSuccessResponse(true,jwt));
-
-
-
     }
 
 

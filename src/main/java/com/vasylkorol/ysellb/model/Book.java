@@ -1,9 +1,13 @@
 package com.vasylkorol.ysellb.model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vasylkorol.ysellb.model.enums.Language;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.authenticator.SpnegoAuthenticator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -17,7 +21,7 @@ import java.util.List;
 @Table(name = "book")
 public class Book {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "book_id")
     private int id;
     private String name;
@@ -30,15 +34,18 @@ public class Book {
     private Integer yearOfPublication;//Year
     private String numberOfPages;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "users_id", referencedColumnName = "users_id")
     private User user;
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,
+    @OneToMany(cascade = CascadeType.REFRESH,fetch = FetchType.LAZY,
         mappedBy = "book")
     private List<Image> images = new ArrayList<>();
     private Long previewImageId;
     private LocalDateTime dateOfCreated;
+    private boolean deleted;
 
+    @ManyToMany(mappedBy = "books",cascade = {CascadeType.REFRESH})
+    private List<Bucket> buckets;
     public Book(Integer bookId) {
         this.id = bookId;
     }

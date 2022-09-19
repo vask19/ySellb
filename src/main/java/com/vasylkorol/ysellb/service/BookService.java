@@ -81,14 +81,15 @@ public class BookService {
         return mapper.fromBook(bookRepository.findById(id).orElse(new Book()));
     }
 
-    //TODO
     @Transactional
     public BookDto deleteBook(Integer id, Principal principal) {
         Book book = bookRepository.findById(id).orElseThrow(()
             -> new UsernameNotFoundException("11"));
         if (book.getUser().getUsername().equals(principal.getName())) {
-            BookDto bookDto = mapper.fromBook(book);
-            bookRepository.delete(book);
+            Book deletedBook = new Book(book.getId());
+            deletedBook.setDeleted(true);
+            bookRepository.save(deletedBook);
+            BookDto bookDto = mapper.fromBook(deletedBook);
             log.info("a book was deleted");
             return bookDto;
         }
