@@ -19,8 +19,8 @@ public class Bucket {
     @JoinColumn(name = "users_id")
     private User user;
     @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
-    @JoinTable(name = "buckets_books",
+    @JoinTable(name = "buckets_products",
     joinColumns = @JoinColumn(name = "bucket_id"),
-    inverseJoinColumns = @JoinColumn(name = "book_id"))
-    private List<Book> books;
+    inverseJoinColumns = @JoinColumn(name = "product_id"))
+    private List<Product> products;
 }

@@ -1,10 +1,10 @@
 package com.vasylkorol.ysellb.service;
-import com.vasylkorol.ysellb.dto.BookDto;
-import com.vasylkorol.ysellb.mapper.BookMapper;
-import com.vasylkorol.ysellb.model.Book;
+import com.vasylkorol.ysellb.dto.ProductDto;
+import com.vasylkorol.ysellb.mapper.ProductMapper;
+import com.vasylkorol.ysellb.model.Product;
 import com.vasylkorol.ysellb.model.Image;
 import com.vasylkorol.ysellb.model.User;
-import com.vasylkorol.ysellb.repository.BookRepository;
+import com.vasylkorol.ysellb.repository.ProductRepository;
 import com.vasylkorol.ysellb.repository.ImageRepository;
 import com.vasylkorol.ysellb.repository.UserRepository;
 import com.vasylkorol.ysellb.security.CustomUserDetails;
@@ -21,24 +21,24 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class BookService {
-    private final BookRepository bookRepository;
+public class ProductService {
+    private final ProductRepository bookRepository;
     private final UserRepository userRepository;
-    private final BookMapper mapper = BookMapper.MAPPER;
+    private final ProductMapper mapper = ProductMapper.MAPPER;
     private final ImageRepository imageRepository;
 
-    public List<BookDto> getAll() {
+    public List<ProductDto> getAll() {
 
         return mapper.fromBookList(bookRepository.findAll());
     }
 
-    public BookDto saveBook(BookDto bookDto){
+    public ProductDto saveBook(ProductDto bookDto){
         return mapper.fromBook(bookRepository.save(mapper.toBook(bookDto)));
     }
 
     @Transactional
-    public BookDto saveNewBook(BookDto bookDto, CustomUserDetails principal, MultipartFile[] multipartFiles) {
-        Book book = mapper.toBook(bookDto);
+    public ProductDto saveNewBook(ProductDto bookDto, CustomUserDetails principal, MultipartFile[] multipartFiles) {
+        Product book = mapper.toBook(bookDto);
         List<Image> images = Arrays.stream(multipartFiles)
                 .filter(el -> el.getSize() != 0)
                 .map(this::toImageEntity)
@@ -48,7 +48,7 @@ public class BookService {
             book.getImages().add(image);});
         images.get(0).setPreviewImage(true);
         book.setUser(getUserByPrincipal(principal));
-        Book bookFromDb = bookRepository.save(book);
+        Product bookFromDb = bookRepository.save(book);
         bookFromDb.setPreviewImageId(bookFromDb.getImages().get(0).getId());
         bookRepository.save(book);
         log.info( "Saved a new book");
@@ -76,21 +76,21 @@ public class BookService {
                 .orElseThrow(() ->  new UsernameNotFoundException("User not found"));
     }
 
-    public BookDto getBook(int id) {
+    public ProductDto getBook(int id) {
         log.info("Gat a book");
-        return mapper.fromBook(bookRepository.findById(id).orElse(new Book()));
+        return mapper.fromBook(bookRepository.findById(id).orElse(new Product()));
     }
 
     //TODO
     @Transactional
-    public BookDto deleteBook(Integer id, Principal principal) {
-        Book book = bookRepository.findById(id).orElseThrow(()
+    public ProductDto deleteBook(Integer id, Principal principal) {
+        Product book = bookRepository.findById(id).orElseThrow(()
             -> new UsernameNotFoundException("11"));
         if (book.getUser().getUsername().equals(principal.getName())) {
-            BookDto bookDto = mapper.fromBook(book);
+            ProductDto bookDto = mapper.fromBook(book);
             bookRepository.delete(book);
             return bookDto;
         }
-        else return new BookDto();
+        else return new ProductDto();
     }
 }

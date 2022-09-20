@@ -7,13 +7,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.Year;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class BookDto {
+public class ProductDto {
 
     private int id;
 
@@ -34,7 +32,7 @@ public class BookDto {
     private String numberOfPages;
 
 
-    public BookDto(Integer bookId) {
+    public ProductDto(Integer bookId) {
         this.id = bookId;
     }
 }

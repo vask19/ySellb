@@ -3,7 +3,6 @@ import com.vasylkorol.ysellb.model.enums.Language;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -15,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "book")
-public class Book {
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "book_id")
@@ -34,13 +33,13 @@ public class Book {
     @JoinColumn(name = "users_id", referencedColumnName = "users_id")
     private User user;
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,
-        mappedBy = "book")
+        mappedBy = "product")
     private List<Image> images = new ArrayList<>();
     private Long previewImageId;
     private LocalDateTime dateOfCreated;
 
-    public Book(Integer bookId) {
-        this.id = bookId;
+    public Product(Integer productId) {
+        this.id = productId;
     }
 
     @PrePersist
