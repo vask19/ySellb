@@ -1,11 +1,11 @@
 package com.vasylkorol.ysellb.service;
-import com.vasylkorol.ysellb.dto.BookDto;
+import com.vasylkorol.ysellb.dto.ProductDto;
 import com.vasylkorol.ysellb.dto.BucketDto;
-import com.vasylkorol.ysellb.mapper.BookMapper;
-import com.vasylkorol.ysellb.model.Book;
+import com.vasylkorol.ysellb.mapper.ProductMapper;
+import com.vasylkorol.ysellb.model.Product;
 import com.vasylkorol.ysellb.model.Bucket;
 import com.vasylkorol.ysellb.model.User;
-import com.vasylkorol.ysellb.repository.BookRepository;
+import com.vasylkorol.ysellb.repository.ProductRepository;
 import com.vasylkorol.ysellb.repository.BucketRepository;
 import com.vasylkorol.ysellb.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,14 +26,14 @@ public class BucketService {
     private final BucketRepository bucketRepository;
     private final UserService userService;
     private final UserRepository userRepository;
-    private final BookRepository bookRepository;
-    private final BookMapper bookMapper = BookMapper.MAPPER;
+    private final ProductRepository bookRepository;
+    private final ProductMapper bookMapper = ProductMapper.MAPPER;
 
     @Transactional
     public Bucket createBucket(User user) {
         Bucket bucket = new Bucket();
         bucket.setUser(user);
-        bucket.setBooks(new ArrayList<>());
+        bucket.setProducts(new ArrayList<>());
         log.info( "Created bucket to user");
         return bucketRepository.save(bucket);
 
@@ -43,27 +43,34 @@ public class BucketService {
                 -> new UsernameNotFoundException("User not exists"));
     }
 
-    private List<Book> getCollectRefBooksByIds(List<Integer> bookIds) {
+    private List<Product> getCollectRefBooksByIds(List<Integer> bookIds) {
         return bookIds.stream()
                 .map(bookRepository::getOne)
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public BookDto addBook(Integer bookId, Principal principal) {
+    public ProductDto addProduct(Integer bookId, Principal principal) {
         User user =  getUserByPrincipal(principal);
 
         Bucket bucket = bucketRepository.findByUser(user).orElse(null);
         if (bucket == null){
             bucket = createBucket(user);}
-        List<Book> products = bucket.getBooks();
-        List<Book> newProductList = products == null ? new ArrayList<>() : new ArrayList<>(products);
+        List<Product> products = bucket.getProducts();
+        List<Product> newProductList = products == null ? new ArrayList<>() : new ArrayList<>(products);
         newProductList.addAll(getCollectRefBooksByIds(Collections.singletonList(bookId)));
+<<<<<<< HEAD
         bucket.setBooks(newProductList);
         log.info( "Added book to bucket");
         bucketRepository.save(bucket);
         log.info("bucket saved");
         return bookMapper.fromBook(bookRepository.getReferenceById(bookId));
+=======
+        bucket.setProducts(newProductList);
+        bucketRepository.save(bucket);
+        log.info( "Added product to bucket");
+        return bookMapper.fromProduct(bookRepository.getReferenceById(bookId));
+>>>>>>> create-chat
 
     }
 
@@ -74,25 +81,29 @@ public class BucketService {
         if (bucket == null) {
             bucket = createBucket(user);
         }
-        List<Book> books = bucket.getBooks();
-        List<Integer> bookIds = books.stream().map(Book::getId).toList();
+        List<Product> books = bucket.getProducts();
+        List<Integer> bookIds = books.stream().map(Product::getId).toList();
         BucketDto bucketDto = new BucketDto();
-        bucketDto.setBooks(bookMapper.fromBookList(getCollectRefBooksByIds(bookIds)));
+        bucketDto.setProducts(bookMapper.fromProductList(getCollectRefBooksByIds(bookIds)));
         return bucketDto;
 
     }
     @Transactional
-    public BookDto deleteBook(Integer id, Principal principal) {
+    public ProductDto deleteBook(Integer id, Principal principal) {
         User user =  getUserByPrincipal(principal);
         Bucket bucket = bucketRepository.findByUser(user).orElse(null);
-        Book book = bookRepository.findById(id).orElseThrow(()
+        Product book = bookRepository.findById(id).orElseThrow(()
             -> new UsernameNotFoundException(""));
+<<<<<<< HEAD
         bucket.getBooks().remove(book);
         log.info( "a book from bucket was deleted ");
+=======
+        bucket.getProducts().remove(book);
+>>>>>>> create-chat
         bucketRepository.save(bucket);
         log.info("a bucket was saved");
 
-        return bookMapper.fromBook(book);
+        return bookMapper.fromProduct(book);
 
     }
 }

@@ -1,7 +1,7 @@
 package com.vasylkorol.ysellb;
 
 import com.vasylkorol.ysellb.mapper.UserMapper;
-import com.vasylkorol.ysellb.repository.BookRepository;
+import com.vasylkorol.ysellb.repository.ProductRepository;
 import com.vasylkorol.ysellb.repository.UserRepository;
 import com.vasylkorol.ysellb.service.UserService;
 import org.junit.jupiter.api.Test;
@@ -16,7 +16,7 @@ public class UserServiceTest {
     private UserRepository userRepository;
     private UserMapper userMapper= Mappers.getMapper(UserMapper.class);
     @Mock
-    private BookRepository bookRepository;
+    private ProductRepository productRepository;
     @InjectMocks
     private UserService userService;
 

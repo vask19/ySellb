@@ -1,15 +1,15 @@
 ----------------------------------
-book controller
+product controller
 
-add book to app - book/add
-get book - book/id
-get all books. book/all
-delete book
+add product to app - product/add
+get product - product/id
+get all books. product/all
+delete product
 ---------------------------------
 bucket controller
-delete book
+delete product
 get bucket
-add book to bucket. bucket/add/id
+add product to bucket. bucket/add/id
 
 ----------------------------------
 
@@ -19,7 +19,7 @@ adds a role 'admin' to user
 update user's status
 delete user
 get user/users
-delete book
+delete product
 ----------------------------------
 
 user controller

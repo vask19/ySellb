@@ -1,4 +1,9 @@
 package com.vasylkorol.ysellb.dto;
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> create-chat
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,5 +17,5 @@ import java.util.List;
 public class BucketDto {
 
     private int id;
-    private List<BookDto> books;
+    private List<ProductDto> products;
 }

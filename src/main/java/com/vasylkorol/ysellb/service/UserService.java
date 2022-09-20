@@ -2,7 +2,7 @@ package com.vasylkorol.ysellb.service;
 import com.vasylkorol.ysellb.dto.UserDto;
 import com.vasylkorol.ysellb.mapper.UserMapper;
 import com.vasylkorol.ysellb.model.User;
-import com.vasylkorol.ysellb.repository.BookRepository;
+import com.vasylkorol.ysellb.repository.ProductRepository;
 import com.vasylkorol.ysellb.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +19,7 @@ import java.util.List;
 public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper= Mappers.getMapper(UserMapper.class);
-    private final BookRepository bookRepository;
+    private final ProductRepository bookRepository;
     public UserDto getUserByUsername(String username){
         return userMapper.fromUser(userRepository.findFirstByUsername(username).orElse(new User()));
     }

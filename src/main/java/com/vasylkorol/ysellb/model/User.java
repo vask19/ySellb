@@ -27,8 +27,13 @@ public class User {
     private boolean active = true;
     private boolean activeEmail;
     private int emailActivationCode;
+<<<<<<< HEAD
     @OneToMany(mappedBy = "user",cascade = CascadeType.REFRESH)
     private List<Book> books;
+=======
+    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
+    private List<Product> products;
+>>>>>>> create-chat
     @Enumerated(EnumType.STRING)
     private Role role;
 

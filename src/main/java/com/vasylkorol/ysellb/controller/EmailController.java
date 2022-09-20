@@ -20,9 +20,7 @@ public class EmailController {
 
     @PostMapping("/simple")
     public ResponseEntity<?> sentEmailTo(@RequestBody EmailReceiver emailReceiver){
-        System.out.println(emailReceiver);
         emailService.sendEmailWithText(emailReceiver);
-
         return ResponseEntity.ok("ok");
 
     }

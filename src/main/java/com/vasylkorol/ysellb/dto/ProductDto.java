@@ -5,12 +5,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+<<<<<<< HEAD:src/main/java/com/vasylkorol/ysellb/dto/BookDto.java
 
+=======
+>>>>>>> create-chat:src/main/java/com/vasylkorol/ysellb/dto/ProductDto.java
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class BookDto {
+public class ProductDto {
 
     private int id;
 
@@ -31,7 +34,7 @@ public class BookDto {
     private String numberOfPages;
 
 
-    public BookDto(Integer bookId) {
+    public ProductDto(Integer bookId) {
         this.id = bookId;
     }
 }

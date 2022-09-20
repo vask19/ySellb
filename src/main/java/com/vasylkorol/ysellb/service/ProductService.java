@@ -1,10 +1,10 @@
 package com.vasylkorol.ysellb.service;
-import com.vasylkorol.ysellb.dto.BookDto;
-import com.vasylkorol.ysellb.mapper.BookMapper;
-import com.vasylkorol.ysellb.model.Book;
+import com.vasylkorol.ysellb.dto.ProductDto;
+import com.vasylkorol.ysellb.mapper.ProductMapper;
+import com.vasylkorol.ysellb.model.Product;
 import com.vasylkorol.ysellb.model.Image;
 import com.vasylkorol.ysellb.model.User;
-import com.vasylkorol.ysellb.repository.BookRepository;
+import com.vasylkorol.ysellb.repository.ProductRepository;
 import com.vasylkorol.ysellb.repository.ImageRepository;
 import com.vasylkorol.ysellb.repository.UserRepository;
 import com.vasylkorol.ysellb.security.CustomUserDetails;
@@ -21,24 +21,24 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class BookService {
-    private final BookRepository bookRepository;
+public class ProductService {
+    private final ProductRepository bookRepository;
     private final UserRepository userRepository;
-    private final BookMapper mapper = BookMapper.MAPPER;
+    private final ProductMapper mapper = ProductMapper.MAPPER;
     private final ImageRepository imageRepository;
 
-    public List<BookDto> getAll() {
+    public List<ProductDto> getAll() {
 
         return mapper.fromBookList(bookRepository.findAll());
     }
 
-    public BookDto saveBook(BookDto bookDto){
+    public ProductDto saveBook(ProductDto bookDto){
         return mapper.fromBook(bookRepository.save(mapper.toBook(bookDto)));
     }
 
     @Transactional
-    public BookDto saveNewBook(BookDto bookDto, CustomUserDetails principal, MultipartFile[] multipartFiles) {
-        Book book = mapper.toBook(bookDto);
+    public ProductDto saveNewBook(ProductDto bookDto, CustomUserDetails principal, MultipartFile[] multipartFiles) {
+        Product book = mapper.toBook(bookDto);
         List<Image> images = Arrays.stream(multipartFiles)
                 .filter(el -> el.getSize() != 0)
                 .map(this::toImageEntity)
@@ -48,8 +48,12 @@ public class BookService {
             book.getImages().add(image);});
         images.get(0).setPreviewImage(true);
         book.setUser(getUserByPrincipal(principal));
+<<<<<<< HEAD:src/main/java/com/vasylkorol/ysellb/service/BookService.java
         Book bookFromDb = bookRepository.save(book);
         log.info("a new book with photos was saved");
+=======
+        Product bookFromDb = bookRepository.save(book);
+>>>>>>> create-chat:src/main/java/com/vasylkorol/ysellb/service/ProductService.java
         bookFromDb.setPreviewImageId(bookFromDb.getImages().get(0).getId());
         bookRepository.save(book);
         log.info( "a new book with preview photo was saved");
@@ -77,22 +81,33 @@ public class BookService {
                 .orElseThrow(() ->  new UsernameNotFoundException("User not found"));
     }
 
+<<<<<<< HEAD:src/main/java/com/vasylkorol/ysellb/service/BookService.java
     public BookDto getBook(int id) {
         return mapper.fromBook(bookRepository.findById(id).orElse(new Book()));
+=======
+    public ProductDto getBook(int id) {
+        log.info("Gat a book");
+        return mapper.fromBook(bookRepository.findById(id).orElse(new Product()));
+>>>>>>> create-chat:src/main/java/com/vasylkorol/ysellb/service/ProductService.java
     }
 
     @Transactional
-    public BookDto deleteBook(Integer id, Principal principal) {
-        Book book = bookRepository.findById(id).orElseThrow(()
+    public ProductDto deleteBook(Integer id, Principal principal) {
+        Product book = bookRepository.findById(id).orElseThrow(()
             -> new UsernameNotFoundException("11"));
         if (book.getUser().getUsername().equals(principal.getName())) {
+<<<<<<< HEAD:src/main/java/com/vasylkorol/ysellb/service/BookService.java
             Book deletedBook = new Book(book.getId());
             deletedBook.setDeleted(true);
             bookRepository.save(deletedBook);
             BookDto bookDto = mapper.fromBook(deletedBook);
             log.info("a book was deleted");
+=======
+            ProductDto bookDto = mapper.fromBook(book);
+            bookRepository.delete(book);
+>>>>>>> create-chat:src/main/java/com/vasylkorol/ysellb/service/ProductService.java
             return bookDto;
         }
-        else return new BookDto();
+        else return new ProductDto();
     }
 }
