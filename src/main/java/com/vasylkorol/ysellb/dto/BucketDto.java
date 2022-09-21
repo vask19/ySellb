@@ -1,9 +1,5 @@
 package com.vasylkorol.ysellb.dto;
-<<<<<<< HEAD
-=======
 
-
->>>>>>> create-chat
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

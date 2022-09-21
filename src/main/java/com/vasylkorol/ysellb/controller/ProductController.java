@@ -26,26 +26,26 @@ public class ProductController {
 
     @GetMapping("{id}")
     public ResponseEntity<ProductDto> getProduct(@PathVariable("id") int id){
-        return ResponseEntity.ok(productService.getBook(id));
+        return ResponseEntity.ok(productService.getProduct(id));
     }
 
 
     @ResponseBody
     @PostMapping("")
-    public ResponseEntity<ProductDto> createProduct(@RequestPart("files") MultipartFile[] files,
+    public ResponseEntity<ProductDto> addProduct(@RequestPart("files") MultipartFile[] files,
                                                  @RequestPart("product") ProductDto productDto
                                               ){
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
 
-       return new ResponseEntity<>(productService.saveNewBook(productDto,principal,files),HttpStatus.OK);
+       return new ResponseEntity<>(productService.saveNewProduct(productDto,principal,files),HttpStatus.OK);
 
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<ProductDto> deleteProductFromUser(@PathVariable Integer id, Principal principal){
-        return new ResponseEntity<>(productService.deleteBook(id,principal),HttpStatus.OK);
+        return new ResponseEntity<>(productService.deleteProduct(id,principal),HttpStatus.OK);
 
     }
 

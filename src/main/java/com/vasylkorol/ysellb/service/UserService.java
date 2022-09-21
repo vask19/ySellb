@@ -19,7 +19,7 @@ import java.util.List;
 public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper= Mappers.getMapper(UserMapper.class);
-    private final ProductRepository bookRepository;
+    private final ProductRepository productRepository;
     public UserDto getUserByUsername(String username){
         return userMapper.fromUser(userRepository.findFirstByUsername(username).orElse(new User()));
     }
@@ -43,7 +43,7 @@ public class UserService {
                 new UsernameNotFoundException("User not found"));
         User newUser = userMapper.toUser(userDto);
         newUser.setPassword(user.getPassword());
-        newUser.setBooks(user.getBooks() == null ? new ArrayList<>() : user.getBooks());
+        newUser.setProducts(user.getProducts() == null ? new ArrayList<>() : user.getProducts());
         newUser.setRole(user.getRole());
         userRepository.save(newUser);
         log.info( "user with updated info was saved");

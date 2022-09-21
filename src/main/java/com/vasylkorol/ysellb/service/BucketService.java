@@ -26,8 +26,8 @@ public class BucketService {
     private final BucketRepository bucketRepository;
     private final UserService userService;
     private final UserRepository userRepository;
-    private final ProductRepository bookRepository;
-    private final ProductMapper bookMapper = ProductMapper.MAPPER;
+    private final ProductRepository productRepository;
+    private final ProductMapper productMapper = ProductMapper.MAPPER;
 
     @Transactional
     public Bucket createBucket(User user) {
@@ -45,7 +45,7 @@ public class BucketService {
 
     private List<Product> getCollectRefBooksByIds(List<Integer> bookIds) {
         return bookIds.stream()
-                .map(bookRepository::getOne)
+                .map(productRepository::getOne)
                 .collect(Collectors.toList());
     }
 
@@ -59,18 +59,12 @@ public class BucketService {
         List<Product> products = bucket.getProducts();
         List<Product> newProductList = products == null ? new ArrayList<>() : new ArrayList<>(products);
         newProductList.addAll(getCollectRefBooksByIds(Collections.singletonList(bookId)));
-<<<<<<< HEAD
-        bucket.setBooks(newProductList);
+        bucket.setProducts(newProductList);
         log.info( "Added book to bucket");
         bucketRepository.save(bucket);
         log.info("bucket saved");
-        return bookMapper.fromBook(bookRepository.getReferenceById(bookId));
-=======
-        bucket.setProducts(newProductList);
-        bucketRepository.save(bucket);
-        log.info( "Added product to bucket");
-        return bookMapper.fromProduct(bookRepository.getReferenceById(bookId));
->>>>>>> create-chat
+        return productMapper.fromProduct(productRepository.getReferenceById(bookId));
+
 
     }
 
@@ -81,10 +75,10 @@ public class BucketService {
         if (bucket == null) {
             bucket = createBucket(user);
         }
-        List<Product> books = bucket.getProducts();
-        List<Integer> bookIds = books.stream().map(Product::getId).toList();
+        List<Product> products = bucket.getProducts();
+        List<Integer> productIds = products.stream().map(Product::getId).toList();
         BucketDto bucketDto = new BucketDto();
-        bucketDto.setProducts(bookMapper.fromProductList(getCollectRefBooksByIds(bookIds)));
+        bucketDto.setProducts(productMapper.fromProductList(getCollectRefBooksByIds(productIds)));
         return bucketDto;
 
     }
@@ -92,18 +86,15 @@ public class BucketService {
     public ProductDto deleteBook(Integer id, Principal principal) {
         User user =  getUserByPrincipal(principal);
         Bucket bucket = bucketRepository.findByUser(user).orElse(null);
-        Product book = bookRepository.findById(id).orElseThrow(()
+        Product product = productRepository.findById(id).orElseThrow(()
             -> new UsernameNotFoundException(""));
-<<<<<<< HEAD
-        bucket.getBooks().remove(book);
-        log.info( "a book from bucket was deleted ");
-=======
-        bucket.getProducts().remove(book);
->>>>>>> create-chat
+        bucket.getProducts().remove(product);
+        log.info( "a product from bucket was deleted ");
+        bucket.getProducts().remove(product);
         bucketRepository.save(bucket);
         log.info("a bucket was saved");
 
-        return bookMapper.fromProduct(book);
+        return productMapper.fromProduct(product);
 
     }
 }

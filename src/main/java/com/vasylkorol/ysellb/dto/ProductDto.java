@@ -5,10 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-<<<<<<< HEAD:src/main/java/com/vasylkorol/ysellb/dto/BookDto.java
 
-=======
->>>>>>> create-chat:src/main/java/com/vasylkorol/ysellb/dto/ProductDto.java
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,7 +14,6 @@ public class ProductDto {
 
     private int id;
 
-    private String image;
 
     private String description;
 

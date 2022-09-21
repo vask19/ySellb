@@ -1,12 +1,8 @@
 package com.vasylkorol.ysellb.model;
-
-
-import com.vasylkorol.ysellb.dto.MessageDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -33,5 +29,5 @@ public class Chat {
     private List<Message> messages;
 
 
-    
+
 }

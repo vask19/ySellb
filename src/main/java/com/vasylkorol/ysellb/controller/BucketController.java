@@ -36,9 +36,9 @@ public class BucketController {
     public ResponseEntity<List<ProductDto>> getBucket(Principal principal){
         BucketDto bucketDto = bucketService.getBucketByUser(principal);
         bucketService.getBucketByUser(principal);
-        return new ResponseEntity<>((bucketDto.getBooks() == null
+        return new ResponseEntity<>((bucketDto.getProducts() == null
                 ? Collections.emptyList()
-                : bucketDto.getBooks()),HttpStatus.OK);
+                : bucketDto.getProducts()),HttpStatus.OK);
 
 
 
