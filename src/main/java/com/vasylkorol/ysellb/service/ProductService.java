@@ -1,6 +1,7 @@
 package com.vasylkorol.ysellb.service;
 import com.vasylkorol.ysellb.dto.ProductDto;
 import com.vasylkorol.ysellb.mapper.ProductMapper;
+import com.vasylkorol.ysellb.model.Bucket;
 import com.vasylkorol.ysellb.model.Product;
 import com.vasylkorol.ysellb.model.Image;
 import com.vasylkorol.ysellb.model.User;
@@ -65,7 +66,7 @@ public class ProductService {
                     .size(file.getSize())
                     .bytes(file.getBytes())
                     .build();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return new Image();
         }
@@ -83,17 +84,15 @@ public class ProductService {
     }
     @Transactional
     public ProductDto deleteProduct(Integer id, Principal principal) {
-        Product book = productRepository.findById(id).orElseThrow(()
-            -> new UsernameNotFoundException("11"));
-        if (book.getUser().getUsername().equals(principal.getName())) {
-            Product deletedProduct = new Product(book.getId());
-            deletedProduct.setDeleted(true);
-            productRepository.save(deletedProduct);
-            ProductDto bookDto = mapper.fromProduct(deletedProduct);
-            log.info("a book was deleted");
-            ProductDto productDto = mapper.fromProduct(book);
-            productRepository.delete(book);
-            return bookDto;
+        Product product = productRepository.findById(id).orElseThrow(()
+            -> new UsernameNotFoundException("product not found"));
+        if (product.getUser().getUsername().equals(principal.getName())) {
+            product.getBuckets()
+                    .forEach(bucket -> bucket.getProducts().remove(product));
+            ProductDto productDto = mapper.fromProduct(product);
+            productRepository.delete(product);
+            log.info("a product was deleted");
+            return productDto;
         }
         else return new ProductDto();
     }

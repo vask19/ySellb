@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -53,9 +54,14 @@ class ProductServiceTest {
         ProductDto productDto = new ProductDto();
 
         CustomUserDetails customUserDetails = Mockito.mock(CustomUserDetails.class);
-        MultipartFile[] files = {Mockito.mock(MultipartFile.class)};
-        Image image = productService.toImageEntity(files[0]);
-        System.out.println(image);
+        final MultipartFile mockFile = mock(MultipartFile.class);
+        when(mockFile.getOriginalFilename()).thenReturn("CoolName");
+        MultipartFile[] files = {mockFile};
+        List<Image> images = List.of(productService.toImageEntity(files[0]));
+        System.out.println(images.get(0));
+
+
+//        System.out.println(image);
         var r = productService.saveNewProduct(productDto,customUserDetails,files);
 
 

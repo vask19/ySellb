@@ -24,6 +24,7 @@ public class User {
     private String username;
     private String password;
     private String phoneNumber;
+    @Builder.Default
     private boolean active = true;
     private boolean activeEmail;
     private int emailActivationCode;

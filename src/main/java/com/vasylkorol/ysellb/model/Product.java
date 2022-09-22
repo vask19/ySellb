@@ -1,10 +1,7 @@
 package com.vasylkorol.ysellb.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vasylkorol.ysellb.model.enums.Language;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.apache.catalina.authenticator.SpnegoAuthenticator;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -40,12 +37,14 @@ public class Product {
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,
         mappedBy = "product")
+    @ToString.Exclude
     private List<Image> images = new ArrayList<>();
     private Long previewImageId;
     private LocalDateTime dateOfCreated;
     private boolean deleted;
 
     @ManyToMany(mappedBy = "products",cascade = {CascadeType.REFRESH})
+    @ToString.Exclude
     private List<Bucket> buckets;
 
     public Product(Integer productId) {
