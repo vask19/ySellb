@@ -38,14 +38,7 @@ public class ChatService {
                 () -> new UsernameNotFoundException("Recipient not found")
         );
         log.info("User {} tried to send message to user {}", sender.getUsername(),recipient.getUsername());
-        Chat chat = chatRepository.findByRecipientAndSenderOrSenderAndRecipient(sender,recipient)
-                .orElseGet(() ->
-        {
-            return chatRepository.save(Chat.builder()
-                    .sender(sender)
-                    .messages(new ArrayList<>())
-                    .recipient(recipient).build());
-        });
+        Chat chat = createChat(sender,recipient);
         Message message = Message.builder()
                 .text(messageText)
                 .dateOfCreate(LocalDateTime.now())
@@ -67,9 +60,21 @@ public class ChatService {
         return messageMapper.fromMessage(message);
     }
 
+
+    public Chat createChat(User sender,User recipient){
+       return chatRepository.findByRecipientAndSenderOrSenderAndRecipient(sender,recipient)
+                .orElseGet(() ->
+                {
+                    return chatRepository.save(Chat.builder()
+                            .sender(sender)
+                            .messages(new ArrayList<>())
+                            .recipient(recipient).build());
+                });
+    }
+
     public User getUserByPrincipal(Principal principal) {
         return userRepository.findFirstByUsername(principal.getName()).orElseThrow(()
-                -> new UsernameNotFoundException("User not exists"));
+                -> new UsernameNotFoundException("User not found"));
     }
 
     public ChatDto getChat(Principal principal, Integer recipientId) {

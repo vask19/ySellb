@@ -16,13 +16,32 @@ public interface ChatMapper {
     ChatMapper MAPPER = Mappers.getMapper(ChatMapper.class);
     MessageMapper messageMapper = MessageMapper.MAPPER;
 
-    @InheritInverseConfiguration
     @Mapping(target = "messages",source = "messageDtoList")
+    @Mapping(target = "sender.id",source = "senderId")
+    @Mapping(target = "recipient.id",source = "recipientId")
     Chat toChat(ChatDto chatDto);
 
+    @InheritInverseConfiguration
     @Mapping(target = "messageDtoList",source = "messages")
+    @Mapping(target = "senderId",source = "sender.id")
+    @Mapping(target = "recipientId",source = "recipient.id")
     ChatDto fromChat(Chat chat);
-    List<Message> toMessageList(List<MessageDto> messageDtoList);
+
+    @Mapping(target = "messages",source = "messageDtoList")
+    @Mapping(target = "sender.id",source = "senderId")
+    @Mapping(target = "recipient.id",source = "recipientId")
+    List<Chat> toChatList(List<ChatDto> chatDtoList);
+
+    @InheritInverseConfiguration
+    @Mapping(target = "messageDtoList",source = "messages")
+    @Mapping(target = "senderId",source = "sender.id")
+    @Mapping(target = "recipientId",source = "recipient.id")
+    List<ChatDto> fromChatList(List<Chat> chats);
+
+
+
+
+
 
 
 

@@ -20,7 +20,7 @@ public class Message {
     //TODO
     private LocalDateTime dateOfCreate;
     private String text;
-    @ManyToOne(cascade = CascadeType.REFRESH)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "chat_id",referencedColumnName = "chat_id")
     private Chat chat;
 

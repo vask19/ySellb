@@ -29,7 +29,7 @@ public class User {
     private boolean activeEmail;
     private int emailActivationCode;
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<Product> products;
     @Enumerated(EnumType.STRING)
     private Role role;

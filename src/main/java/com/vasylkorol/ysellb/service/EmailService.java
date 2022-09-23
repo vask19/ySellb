@@ -45,10 +45,11 @@ public class EmailService {
         int code = (new Random().nextInt(100000,900000));
         user.setEmailActivationCode(code);
         String text = "Your registration code: " + code;
-        EmailReceiver emailReceiver = new EmailReceiver();
-        emailReceiver.setEmails(Collections.singletonList(user.getEmail()));
-        emailReceiver.setSubject("Registration on ySellb");
-        emailReceiver.setText(text);
+        EmailReceiver emailReceiver = EmailReceiver.builder()
+                .emails(Collections.singletonList(user.getEmail()))
+                .subject("Registration on ySellb")
+                .text(text)
+                .build();
         sendEmailWithText(emailReceiver);
         userRepository.save(user);
         log.info("Email with activation code was sent to user");
@@ -61,7 +62,7 @@ public class EmailService {
             user.setActiveEmail(true);
             user.setRole(Role.ROLE_USER);
             userRepository.save(user);
-            log.info("User sent him activation code to application ");
+            log.info("User sent his activation code to the application ");
             log.info("user was activated");
         }
         else log.info("User sent a false activation code");

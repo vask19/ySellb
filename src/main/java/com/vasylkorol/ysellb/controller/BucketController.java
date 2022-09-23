@@ -45,8 +45,8 @@ public class BucketController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ProductDto> deleteBook(@PathVariable Integer id, Principal principal){
-        return new ResponseEntity<>(bucketService.deleteBook(id,principal), HttpStatus.OK);
+    public ResponseEntity<ProductDto> deleteProduct(@PathVariable Integer id, Principal principal){
+        return new ResponseEntity<>(bucketService.deleteProduct(id,principal), HttpStatus.OK);
     }
 
 }

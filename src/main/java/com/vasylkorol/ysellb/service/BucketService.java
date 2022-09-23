@@ -34,7 +34,7 @@ public class BucketService {
         Bucket bucket = new Bucket();
         bucket.setUser(user);
         bucket.setProducts(new ArrayList<>());
-        log.info( "Created bucket to user");
+        log.info( "a bucket for user was created");
         return bucketRepository.save(bucket);
 
     }
@@ -52,7 +52,6 @@ public class BucketService {
     @Transactional
     public ProductDto addProduct(Integer bookId, Principal principal) {
         User user =  getUserByPrincipal(principal);
-
         Bucket bucket = bucketRepository.findByUser(user).orElse(null);
         if (bucket == null){
             bucket = createBucket(user);}
@@ -60,7 +59,7 @@ public class BucketService {
         List<Product> newProductList = products == null ? new ArrayList<>() : new ArrayList<>(products);
         newProductList.addAll(getCollectRefBooksByIds(Collections.singletonList(bookId)));
         bucket.setProducts(newProductList);
-        log.info( "Added book to bucket");
+        log.info( "a product was added to bucket");
         bucketRepository.save(bucket);
         log.info("bucket saved");
         return productMapper.fromProduct(productRepository.getReferenceById(bookId));
@@ -71,7 +70,6 @@ public class BucketService {
     public BucketDto getBucketByUser(Principal principal){
         User user =  getUserByPrincipal(principal);
         Bucket bucket = bucketRepository.findByUser(user).orElse(null);
-
         if (bucket == null) {
             bucket = createBucket(user);
         }
@@ -83,12 +81,11 @@ public class BucketService {
 
     }
     @Transactional
-    public ProductDto deleteBook(Integer id, Principal principal) {
+    public ProductDto deleteProduct(Integer id, Principal principal) {
         User user =  getUserByPrincipal(principal);
         Bucket bucket = bucketRepository.findByUser(user).orElse(null);
         Product product = productRepository.findById(id).orElseThrow(()
             -> new UsernameNotFoundException(""));
-        bucket.getProducts().remove(product);
         log.info( "a product from bucket was deleted ");
         bucket.getProducts().remove(product);
         bucketRepository.save(bucket);

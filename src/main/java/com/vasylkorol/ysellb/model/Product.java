@@ -31,7 +31,7 @@ public class Product {
     private Integer yearOfPublication;//Year
     private String numberOfPages;
 
-    @ManyToOne(cascade = CascadeType.REFRESH)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "users_id", referencedColumnName = "users_id")
     private User user;
 
@@ -43,7 +43,7 @@ public class Product {
     private LocalDateTime dateOfCreated;
     private boolean deleted;
 
-    @ManyToMany(mappedBy = "products",cascade = {CascadeType.REFRESH})
+    @ManyToMany(mappedBy = "products")
     @ToString.Exclude
     private List<Bucket> buckets;
 
