@@ -57,6 +57,33 @@ public class ProductService {
         return mapper.fromProduct(productRepository.save(product));
     }
 
+    @Transactional
+    public ProductDto saveNewProduct(ProductDto productDto, CustomUserDetails principal, List<MultipartFile> multipartFiles) {
+        Product product = mapper.toProduct(productDto);
+        List<Image> images = multipartFiles.stream()
+                .filter(el -> el.getSize() != 0)
+                .map(this::toImageEntity)
+                .toList();
+        images.forEach(image -> {
+            image.setProduct(product);
+            product.getImages().add(image);});
+        images.get(0).setPreviewImage(true);
+        product.setUser(getUserByPrincipal(principal));
+        log.info("a new product with photos was saved");
+        Product bookFromDb = productRepository.save(product);
+        log.info("product: {}/ productFromDb {}",product,bookFromDb);
+        bookFromDb.setPreviewImageId(bookFromDb.getImages().get(0).getId());
+        productRepository.save(product);
+        log.info( "a new product with preview photo was saved");
+        return mapper.fromProduct(productRepository.save(product));
+    }
+
+
+
+
+
+
+
     public Image toImageEntity(MultipartFile file){
         try {
             return Image.builder()

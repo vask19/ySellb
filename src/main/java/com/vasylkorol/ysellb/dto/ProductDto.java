@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 
 @Data
 @AllArgsConstructor
@@ -29,6 +31,7 @@ public class ProductDto {
 
     private String numberOfPages;
 
+    private List<Integer> imageIds;
 
     public ProductDto(Integer bookId) {
         this.id = bookId;

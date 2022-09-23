@@ -39,10 +39,5 @@ public interface ChatMapper {
     List<ChatDto> fromChatList(List<Chat> chats);
 
 
-
-
-
-
-
-
+    List<Message> toMessageList(List<MessageDto> messageDtoList);
 }
