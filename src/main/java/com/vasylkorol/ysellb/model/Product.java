@@ -36,7 +36,7 @@ public class Product {
     @JoinColumn(name = "users_id", referencedColumnName = "users_id")
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,
         mappedBy = "product")
     @ToString.Exclude
     private List<Image> images = new ArrayList<>();
@@ -44,7 +44,7 @@ public class Product {
     private LocalDateTime dateOfCreated;
     private boolean deleted;
 
-    @ManyToMany(mappedBy = "products")
+    @ManyToMany(mappedBy = "products",fetch = FetchType.LAZY)
     @ToString.Exclude
     private List<Bucket> buckets;
 

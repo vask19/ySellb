@@ -18,14 +18,14 @@ public class Chat {
     @Column(name = "chat_id")
     private int id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sender_id")
     private User sender;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "recipient_id")
     private User recipient;
 
-    @OneToMany(mappedBy = "chat",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "chat",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Message> messages;
 
 

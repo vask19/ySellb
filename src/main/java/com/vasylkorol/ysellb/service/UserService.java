@@ -6,6 +6,7 @@ import com.vasylkorol.ysellb.repository.ProductRepository;
 import com.vasylkorol.ysellb.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.Session;
 import org.mapstruct.factory.Mappers;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,7 @@ public class UserService {
     }
     @Transactional
     public UserDto updateUser(UserDto userDto) {
+        
         User user = userRepository.findFirstByUsername(userDto.getUsername()).orElseThrow(()->
                 new UsernameNotFoundException("User not found"));
         User newUser = userMapper.toUser(userDto);
@@ -46,7 +48,7 @@ public class UserService {
         newUser.setProducts(user.getProducts() == null ? new ArrayList<>() : user.getProducts());
         newUser.setRole(user.getRole());
         userRepository.save(newUser);
-        log.info( "user with updated info was saved");
+        log.info( "user was updated");
         return userDto;
     }
 }

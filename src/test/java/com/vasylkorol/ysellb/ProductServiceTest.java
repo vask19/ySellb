@@ -77,38 +77,7 @@ class ProductServiceTest {
         var expectedResult = productDto;
 
         assertEquals(actualResult,actualResult);
-
-
-
-
-
-//        doReturn(new Image())
-//                 .when(productService).toImageEntity();
-        assertEquals(0,0);
-
     }
-
-    /*
-  @Transactional
-    public ProductDto saveNewBook(ProductDto bookDto, CustomUserDetails principal, MultipartFile[] multipartFiles) {
-        Product book = mapper.toProduct(bookDto);
-        List<Image> images = Arrays.stream(multipartFiles)
-                .filter(el -> el.getSize() != 0)
-                .map(this::toImageEntity)
-                .toList();
-        images.forEach(image -> {
-            image.setProduct(book);
-            book.getImages().add(image);});
-        images.get(0).setPreviewImage(true);
-        book.setUser(getUserByPrincipal(principal));
-        log.info("a new book with photos was saved");
-        Product bookFromDb = productRepository.save(book);
-        bookFromDb.setPreviewImageId(bookFromDb.getImages().get(0).getId());
-        productRepository.save(book);
-        log.info( "a new book with preview photo was saved");
-        return mapper.fromProduct(productRepository.save(book));
-    }
-    * */
 
 
 
