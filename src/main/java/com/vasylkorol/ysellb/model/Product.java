@@ -3,6 +3,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vasylkorol.ysellb.model.enums.Language;
 import lombok.*;
 import org.apache.catalina.authenticator.SpnegoAuthenticator;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -32,6 +34,7 @@ public class Product {
     private Integer yearOfPublication;//Year
     private String numberOfPages;
 
+    @ToString.Exclude
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "users_id", referencedColumnName = "users_id")
     private User user;
@@ -39,6 +42,7 @@ public class Product {
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,
         mappedBy = "product")
     @ToString.Exclude
+    @Fetch(FetchMode.SUBSELECT)
     private List<Image> images = new ArrayList<>();
     private Long previewImageId;
     private LocalDateTime dateOfCreated;
