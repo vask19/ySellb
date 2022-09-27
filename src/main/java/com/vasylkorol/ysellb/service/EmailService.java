@@ -36,7 +36,7 @@ public class EmailService {
             message.setTo(email);
             javaMailSender.send(message);
         });
-        log.info("Emails were sent");
+        log.info("messages for emails were sent");
     }
 
     @Transactional
@@ -70,7 +70,7 @@ public class EmailService {
     }
     public User getUserByPrincipal(Principal principal) {
         return userRepository.findFirstByUsername(principal.getName()).orElseThrow(()
-                -> new UsernameNotFoundException("User not exists"));
+                -> new UsernameNotFoundException("User not found with username: " + principal.getName()));
     }
 
 }

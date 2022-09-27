@@ -1,6 +1,7 @@
 package com.vasylkorol.ysellb.service;
 import com.vasylkorol.ysellb.dto.ProductDto;
 import com.vasylkorol.ysellb.dto.BucketDto;
+import com.vasylkorol.ysellb.exception.ProductNotFoundException;
 import com.vasylkorol.ysellb.mapper.ProductMapper;
 import com.vasylkorol.ysellb.model.Product;
 import com.vasylkorol.ysellb.model.Bucket;
@@ -40,7 +41,7 @@ public class BucketService {
     }
     public User getUserByPrincipal(Principal principal) {
         return userRepository.findFirstByUsername(principal.getName()).orElseThrow(()
-                -> new UsernameNotFoundException("User not exists"));
+                -> new UsernameNotFoundException("User not exists with username: " + principal.getName()));
     }
 
     private List<Product> getCollectRefBooksByIds(List<Integer> bookIds) {
@@ -61,7 +62,6 @@ public class BucketService {
         bucket.setProducts(newProductList);
         log.info( "a product was added to bucket");
         bucketRepository.save(bucket);
-        log.info("bucket saved");
         return productMapper.fromProduct(productRepository.getReferenceById(bookId));
 
 
@@ -85,12 +85,10 @@ public class BucketService {
         User user =  getUserByPrincipal(principal);
         Bucket bucket = bucketRepository.findByUser(user).orElse(null);
         Product product = productRepository.findById(id).orElseThrow(()
-            -> new UsernameNotFoundException(""));
+            -> new ProductNotFoundException(id));
         log.info( "a product from bucket was deleted ");
         bucket.getProducts().remove(product);
         bucketRepository.save(bucket);
-        log.info("a bucket was saved");
-
         return productMapper.fromProduct(product);
 
     }

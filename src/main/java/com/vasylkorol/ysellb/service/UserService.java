@@ -26,23 +26,19 @@ public class UserService {
     }
 
 
-    public void saveUser(User user) {
-
-        userRepository.save(user);
-    }
 
     public List<UserDto> getAllUsers(){
         return userMapper.fromUserList(userRepository.findAll());
     }
 
     public UserDto getUserById(Integer id) {
-        return userMapper.fromUser(userRepository.findFirstById(id).orElse(new User()));
+        return userMapper.fromUser(userRepository.findFirstById(id).orElseThrow(()->
+                new UsernameNotFoundException("User not found with id: " + id)));
     }
     @Transactional
     public UserDto updateUser(UserDto userDto) {
-        
         User user = userRepository.findFirstByUsername(userDto.getUsername()).orElseThrow(()->
-                new UsernameNotFoundException("User not found"));
+                new UsernameNotFoundException("User not found with username: " + userDto.getUsername()));
         User newUser = userMapper.toUser(userDto);
         newUser.setPassword(user.getPassword());
         newUser.setProducts(user.getProducts() == null ? new ArrayList<>() : user.getProducts());
