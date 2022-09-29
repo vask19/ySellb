@@ -8,6 +8,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -32,12 +33,21 @@ public class User {
     private boolean activeEmail;
     private int emailActivationCode;
 
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinColumn(name = "image_id")
+    private Image avatar;
+
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @Fetch(FetchMode.SUBSELECT)
     private List<Product> products;
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    private LocalDateTime dateOfCreated;
+    @PrePersist
+    private void init(){
+        dateOfCreated = LocalDateTime.now();
+    }
 
 
 }
