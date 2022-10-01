@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>registration</title>
+</head>
+<body>
+
+<form th:method="POST" th:action="@{/api/registration}" th:object="${user}">
+    <input type="text" th:field = "*{username}" id="username">
+
+
+
+    <input type="submit" value="SIgn in">
+
+</form>
+
+</body>
+</html>

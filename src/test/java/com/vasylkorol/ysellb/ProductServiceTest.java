@@ -73,7 +73,7 @@ class ProductServiceTest {
         product.setUser(new User());
         product.getImages().add(image);
         when(productRepository.save(product)).thenReturn(product);
-        var actualResult = productService.saveNewProduct(productDto,customUserDetails,files);
+        var actualResult = productService.saveNewProduct(productDto,customUserDetails,null);
         var expectedResult = productDto;
 
         assertEquals(actualResult,actualResult);
