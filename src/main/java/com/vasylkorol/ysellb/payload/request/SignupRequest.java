@@ -16,12 +16,12 @@ public class SignupRequest {
     @NotEmpty(message = "The password cannot be empty")
     @Size(min = 6,max = 30,message = "The password must be in the range from 6 to 30 characters")
     private String password;
-    @NotEmpty
-    private String firstName;
-    @NotEmpty
-    private String secondName;
-    @NotEmpty
-    @Email
-    private String email;
-    private String phoneNumber;
+//    @NotEmpty
+//    private String firstName;
+//    @NotEmpty
+//    private String secondName;
+//    @NotEmpty
+//    //@Email
+//    private String email;
+//    private String phoneNumber;
 }

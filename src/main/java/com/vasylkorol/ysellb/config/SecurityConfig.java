@@ -19,9 +19,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
                 .authorizeHttpRequests((requests) -> requests
                         .antMatchers("/api/admin/**").hasRole("ADMIN")
-                        .antMatchers("/api/auth/**").permitAll()
+                        .antMatchers("/api/auth/**","/api/home").permitAll()
                         .antMatchers("/api/message/**").hasAnyRole("USER","ADMIN")
                         .antMatchers("/api/mails/activation/**").hasRole("NOT_CONFIRMED_USER")
                         .anyRequest()
@@ -30,7 +31,11 @@ public class SecurityConfig {
                 )
                 .userDetailsService(customUserDetailsService)
 
-                .formLogin().permitAll()
+                .formLogin().loginPage("/api/auth/login")
+                    .loginProcessingUrl("/process_login")
+                    .defaultSuccessUrl("/api/home",true)
+                    .failureUrl("/api/auth/login?error")
+                    .permitAll()
                 .and()
                 .logout((logout) -> logout.permitAll());
 

@@ -6,12 +6,19 @@
 </head>
 <body>
 
-<form th:method="POST" th:action="@{/api/registration}" th:object="${user}">
+<form th:method="POST" th:action="@{/api/auth/registration}" th:object="${signupRequest}">
+    <label for="username">Enter username: </label>
     <input type="text" th:field = "*{username}" id="username">
+    <div style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</div>
+    <br/>
 
+    <br/>
+    <label for="password">Enter password: </label>
+    <input type="text" th:field="*{password}" id="password">
+    <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
+    <br/>
+    <input type="submit" value="Sign up">
 
-
-    <input type="submit" value="SIgn in">
 
 </form>
 
