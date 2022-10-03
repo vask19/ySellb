@@ -24,7 +24,7 @@ public class SecurityConfig {
                         .antMatchers("/api/admin/**").hasRole("ADMIN")
                         .antMatchers("/api/auth/**","/api/home").permitAll()
                         .antMatchers("/api/message/**").hasAnyRole("USER","ADMIN")
-                        .antMatchers("/api/mails/activation/**").hasRole("NOT_CONFIRMED_USER")
+                        .antMatchers("/api/emails/activation/**").hasRole("NOT_CONFIRMED_USER")
                         .anyRequest()
                         .hasAnyRole("USER", "ADMIN")
                         .and()
