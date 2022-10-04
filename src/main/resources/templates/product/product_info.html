@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Product info</title>
+</head>
+<body>
+
+<p th:text="${productDto.getName()}"></p>
+<p th:text="${productDto.getType()}"></p>
+<p th:text="${productDto.getLocate()}"></p>
+<p th:text="${productDto.getPrice()}"></p>
+<p th:text="${productDto.getDescription()}"></p>
+
+<a th:href="@{/api/users/{id}(id=${productDto.getUserId()})}"><p th:text="${productDto.getOwnerUsername()}"></p></a>
+
+</body>
+</html>

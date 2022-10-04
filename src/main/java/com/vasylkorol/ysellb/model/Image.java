@@ -3,11 +3,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.bytebuddy.implementation.bind.annotation.Default;
+
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Table(name = "image")
@@ -26,4 +28,19 @@ public class Image {
     @ManyToOne(cascade = CascadeType.REFRESH,fetch = FetchType.EAGER)
     private Product product;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Image image = (Image) o;
+        return id.equals(image.id);
+    }
+
+    public Image(){
+
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

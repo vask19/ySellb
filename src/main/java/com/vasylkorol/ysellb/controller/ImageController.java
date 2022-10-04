@@ -19,8 +19,6 @@ import java.io.ByteArrayInputStream;
 public class ImageController {
 
     private final ImageService imageService;
-
-
     @GetMapping("/{id}")
     public ResponseEntity<?> getImageById(@PathVariable("id") Long id) {
         Image image = imageService.findById(id);

@@ -1,13 +1,10 @@
 package com.vasylkorol.ysellb.model;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vasylkorol.ysellb.model.enums.Language;
+import com.vasylkorol.ysellb.model.enums.Locate;
+import com.vasylkorol.ysellb.model.enums.Type;
 import lombok.*;
-import org.apache.catalina.authenticator.SpnegoAuthenticator;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -27,12 +24,13 @@ public class Product {
     private String name;
     @Column(columnDefinition = "text")
     private String description;
-    private String author;
-    private String publishingHouse;
+
     @Enumerated(EnumType.STRING)
-    private Language language;//enum
-    private Integer yearOfPublication;//Year
-    private String numberOfPages;
+    private Type type;
+    @Enumerated(EnumType.STRING)
+    private Locate locate;
+    private Double price;
+
 
     @ToString.Exclude
     @ManyToOne(cascade = CascadeType.PERSIST)
