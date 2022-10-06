@@ -28,9 +28,17 @@ public class ProductService {
     private final UserRepository userRepository;
     private final ProductMapper mapper = ProductMapper.MAPPER;
 
+    @Transactional
     public List<ProductDto> getAll() {
 
         return mapper.fromProductList(productRepository.findAll());
+    }
+
+    @Transactional
+    public List<ProductDto> getAllByUserId(Integer id){
+        User user = userRepository.findFirstById(id).orElseThrow();
+        return mapper.fromProductList(productRepository.findAllByUser(user));
+
     }
 
     @Transactional
@@ -74,9 +82,11 @@ public class ProductService {
                 .orElseThrow(() ->  new UsernameNotFoundException("User not found with username: " + principal.getUsername()));
     }
 
+    @Transactional
     public ProductDto getProduct(int id) {
-        return mapper.fromProduct(productRepository.findById(id).orElseThrow(() ->
-                new ProductNotFoundException(id)));
+        Product product = productRepository.findById(id).orElseThrow(() ->
+                new ProductNotFoundException(id));
+        return mapper.fromProduct(product);
 
     }
     @Transactional
@@ -93,4 +103,6 @@ public class ProductService {
         }
         else return new ProductDto();
     }
+
+
 }

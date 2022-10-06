@@ -33,7 +33,7 @@ public class SecurityConfig {
 
                 .formLogin().loginPage("/api/auth/login")
                     .loginProcessingUrl("/process_login")
-                    .defaultSuccessUrl("/api/home",true)
+                    .defaultSuccessUrl("/api/",true)
                     .failureUrl("/api/auth/login?error")
                     .permitAll()
                 .and()

@@ -28,9 +28,15 @@ public class Chat {
     @JoinColumn(name = "recipient_id")
     private User recipient;
 
+
     @OneToMany(mappedBy = "chat",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @Fetch(FetchMode.SUBSELECT)
     private List<Message> messages;
+
+    @Override
+    public String toString(){
+        return "" + id;
+    }
 
 
 

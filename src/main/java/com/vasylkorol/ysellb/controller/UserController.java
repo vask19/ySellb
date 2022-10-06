@@ -1,5 +1,10 @@
 package com.vasylkorol.ysellb.controller;
+import com.vasylkorol.ysellb.dto.MessageDto;
+import com.vasylkorol.ysellb.dto.ProductDto;
 import com.vasylkorol.ysellb.dto.UserDto;
+import com.vasylkorol.ysellb.mapper.ProductMapper;
+import com.vasylkorol.ysellb.model.Product;
+import com.vasylkorol.ysellb.service.ProductService;
 import com.vasylkorol.ysellb.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -8,12 +13,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
+    private final ProductService productService;
+    private ProductMapper mapper = ProductMapper.MAPPER;
     @PutMapping("/update")
     private ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto){
         System.out.println(11);
@@ -21,9 +30,13 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public String  getUser(@PathVariable("id") Integer id, Model model){
+    public String  getUsersPage(@PathVariable("id") Integer id, Model model){
         UserDto userDto = userService.getUserById(id);
+        List<ProductDto> productDtoList = productService.getAllByUserId(id);
+
+        userDto.setProductDtoList(productDtoList);
         model.addAttribute("userDto",userDto);
+        model.addAttribute("messageDto",new MessageDto());
         return "user/user_page";
 
     }

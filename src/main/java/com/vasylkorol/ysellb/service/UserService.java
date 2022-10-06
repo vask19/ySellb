@@ -31,9 +31,12 @@ public class UserService {
         return userMapper.fromUserList(userRepository.findAll());
     }
 
+    @Transactional
     public UserDto getUserById(Integer id) {
-        return userMapper.fromUser(userRepository.findFirstById(id).orElseThrow(()->
-                new UsernameNotFoundException("User not found with id: " + id)));
+        User user = userRepository.findFirstById(id).orElseThrow(()->
+                new UsernameNotFoundException("User not found with id: " + id));
+
+        return userMapper.fromUser(user);
     }
     @Transactional
     public UserDto updateUser(UserDto userDto) {

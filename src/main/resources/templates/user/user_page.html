@@ -5,7 +5,45 @@
     <title>User info</title>
 </head>
 <body>
-use
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
 
+<div class="userInfo">
+    <p th:text="${userDto.getUsername}"></p>
+    <p th:text="${userDto.getFirstName}"></p>
+    <p th:text="${userDto.getSecondName}"></p>
+    <p th:text="${userDto.getEmail}"></p>
+    <p th:text="${userDto.getPhoneNumber}"></p>
+    <p avatar></p>
+
+
+</div>
+
+<form th:method="post"  th:action="@{/api/chats/2}") th:object="${messageDto}">
+    <textarea th:field="*{text}" rows="5" cols="5"></textarea>
+    <input type="submit" th:value="send">
+
+</form>
+<hr/>
+
+<hr/>
+<hr/>
+
+
+<div class="usersProducts">
+    <div th:each="product: ${userDto.getProductDtoList()}">
+        <div>
+            <p th:text="${product.getName()}">Name</p>
+            <p th:text="${product.getPrice()}" >price</p>
+            <a th:href="@{/api/products/{id}(id=${product.getId()})}"><img th:src="@{/api/images/{id}(id=${product.getImageIds().get(0)})}" th:high="60" th:width="60"></a>
+            <hr/>
+        </div>
+
+
+    </div>
+</div>
+<!--<script>-->
+<!--    let form = document.querySelector("form");-->
+<!--    form.submit();-->
+<!--</script>-->
 </body>
 </html>

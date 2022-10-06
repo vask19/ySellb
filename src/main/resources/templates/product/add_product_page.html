@@ -5,6 +5,8 @@
     <title>Title</title>
 </head>
 <body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
 <form th:method="post" th:action="@{/api/products}" th:object="${productDto}" enctype="multipart/form-data">
 
     <label for="name">Product name: </label>

@@ -6,6 +6,7 @@
     <title>Product info</title>
 </head>
 <body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
 
 <p th:text="${productDto.getName()}"></p>
 <p th:text="${productDto.getType()}"></p>

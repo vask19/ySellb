@@ -24,6 +24,8 @@ public class Message {
     @JoinColumn(name = "chat_id",referencedColumnName = "chat_id")
     private Chat chat;
 
+    private boolean sent;
+
 
 
 

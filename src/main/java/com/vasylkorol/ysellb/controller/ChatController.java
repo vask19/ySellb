@@ -5,26 +5,37 @@ import com.vasylkorol.ysellb.dto.MessageDto;
 import com.vasylkorol.ysellb.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
-@RequestMapping("/api/message")
+@RequestMapping("/api/chats")
 public class ChatController {
     private final ChatService chatService;
 
     @PostMapping("/{id}")
-    public ResponseEntity<MessageDto> sendMessage(@PathVariable("id") Integer id, Principal principal,@RequestBody String messageText){
-
-        MessageDto messageDto = chatService.sendMessage(principal,id,messageText);
-        return ResponseEntity.ok(messageDto);
+    public String  sendMessage(@PathVariable("id") Integer id, Principal principal,@ModelAttribute("messageDto") MessageDto messageDto){
+        MessageDto message = chatService.sendMessage(principal,id,messageDto.getText());
+        return "home";
     }
 
+    @GetMapping("")
+    public String getAllChats(Principal principal, Model model){
+        List<ChatDto> chatDtoList =
+                chatService.getAllChatDtoList(principal);
+        model.addAttribute("chatDtoList",chatDtoList);
+        return "chat/chats_page";
+    }
+
+
     @GetMapping("{id}")
-    public ResponseEntity<ChatDto> getAllMessagesWithUserById(@PathVariable("id") Integer recipientId, Principal principal){
+    public String getAllMessagesWithUserById(@PathVariable("id") Integer recipientId, Principal principal){
         var chatDto = chatService.getChat(principal,recipientId);
-        return ResponseEntity.ok(chatDto);
+        return "chat/chats_page";
     }
 }

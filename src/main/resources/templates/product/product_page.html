@@ -6,13 +6,15 @@
     <title>Products</title>
 </head>
 <body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
 
 <div th:each="product: ${productDtoList}">
    <div  >
 
        <p th:text="${product.getName()}">Name</p>
        <p th:text="${product.getPrice()}" >price</p>
-       <a th:href="@{/api/products/{id}(id=${product.getId()})}">r</a>
+       <a th:href="@{/api/products/{id}(id=${product.getId()})}"><img th:src="@{/api/images/{id}(id=${product.getImageIds().get(0)})}" th:high="60" th:width="60"></a>
+
 
        <hr/>
    </div>

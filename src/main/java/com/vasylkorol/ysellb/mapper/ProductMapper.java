@@ -17,7 +17,9 @@ public interface ProductMapper {
 
     ProductMapper MAPPER = Mappers.getMapper(ProductMapper.class);
 
-    List<Long> map(List<Image> value);
+    default List<Long> map(List<Image> value){
+        return value.stream().map(Image::getId).collect(Collectors.toList());
+    }
 
     default Long map(Image value){
         return value.getId();
@@ -36,7 +38,7 @@ public interface ProductMapper {
     List<Product> toProductList(List<ProductDto> productDtoList);
 
     @Mapping(target = "user.id",source = "userId")
-    @Mapping(target = "images",source = "imageIds")
+    @Mapping(target = "imageIds",source = "images")
     @Mapping(target = "ownerUsername",source = "user.username")
     List<ProductDto> fromProductList(List<Product> products);
 

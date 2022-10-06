@@ -13,4 +13,6 @@ public class MessageDto {
     private int id;
     private String text;
     private LocalDateTime dateOfCreate;
+    private boolean sent;
+
 }

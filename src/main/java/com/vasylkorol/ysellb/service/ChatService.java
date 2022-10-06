@@ -20,6 +20,7 @@ import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -43,6 +44,7 @@ public class ChatService {
         Chat chat = createChat(sender,recipient);
         Message message = Message.builder()
                 .text(messageText)
+                .sent(true)
                 .dateOfCreate(LocalDateTime.now())
                 .chat(chat)
                 .build();
@@ -61,6 +63,7 @@ public class ChatService {
     }
 
 
+    @Transactional
     public Chat createChat(User sender,User recipient){
        return chatRepository.findByRecipientAndSenderOrSenderAndRecipient(sender,recipient)
                 .orElseGet(() ->
@@ -77,6 +80,7 @@ public class ChatService {
                 -> new UsernameNotFoundException("User not found with username: " + principal.getName()));
     }
 
+    @Transactional
     public ChatDto getChat(Principal principal, Integer recipientId) {
        User sender = getUserByPrincipal(principal);
        User recipient = userRepository.findFirstById(recipientId).orElseThrow(
@@ -86,5 +90,12 @@ public class ChatService {
                 .orElseThrow(ChatNotFoundException::new);
         return chatMapper.fromChat(chat);
 
+    }
+
+    @Transactional
+    public List<ChatDto> getAllChatDtoList(Principal principal){
+        User user = getUserByPrincipal(principal);
+        return chatMapper.fromChatList(chatRepository.findAllByRecipientOrSender(user,user)
+                .orElseThrow(() -> new ChatNotFoundException("You haven't any chats")));
     }
 }

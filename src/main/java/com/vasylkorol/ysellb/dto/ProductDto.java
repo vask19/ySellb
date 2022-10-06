@@ -26,6 +26,8 @@ public class ProductDto {
     private List<Long> imageIds = new ArrayList<>();
     private Integer userId;
     private String ownerUsername;
+    private Long previewImageId;
+
     public ProductDto(Integer bookId) {
         this.id = bookId;
     }
