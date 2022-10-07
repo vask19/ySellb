@@ -11,14 +11,19 @@
 
 <div th:each="chat: ${chatDtoList}">
     <div th:each="message: ${chat.getMessageDtoList()}">
-        <div th:if="${message.isSent()}" style="color: green">
-            <p th:text="${message.getText()}"></p>
-        </div>
-
-
-
+        <div >
+            <span th:text="${message.isSent()} ? ${chat.getSendersUsername()} : ${chat.getRecipientsUsername()}"></span>
+            <span>: </span>
+            <span th:text=" ${message.getText()}"></span>
     </div>
+    </div>
+    <hr/>
+    <br/>
+    <hr/>
 
 </div>
+<script>
+
+</script>
 </body>
 </html>

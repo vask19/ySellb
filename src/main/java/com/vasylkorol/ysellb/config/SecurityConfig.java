@@ -22,7 +22,7 @@ public class SecurityConfig {
                 .csrf().disable()
                 .authorizeHttpRequests((requests) -> requests
                         .antMatchers("/api/admin/**").hasRole("ADMIN")
-                        .antMatchers("/api/auth/**","/api/home").permitAll()
+                        .antMatchers("/api/auth/**","/api/").permitAll()
                         .antMatchers("/api/message/**").hasAnyRole("USER","ADMIN")
                         .antMatchers("/api/emails/activation/**").hasRole("NOT_CONFIRMED_USER")
                         .anyRequest()

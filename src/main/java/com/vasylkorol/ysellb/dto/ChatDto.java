@@ -11,6 +11,8 @@ public class ChatDto {
     private int id;
     private int senderId;
     private int recipientId;
+    private String sendersUsername;
+    private String recipientsUsername;
     private List<MessageDto> messageDtoList;
 
 }

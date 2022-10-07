@@ -28,6 +28,7 @@ public class ChatController {
     public String getAllChats(Principal principal, Model model){
         List<ChatDto> chatDtoList =
                 chatService.getAllChatDtoList(principal);
+        System.out.println(chatDtoList);
         model.addAttribute("chatDtoList",chatDtoList);
         return "chat/chats_page";
     }

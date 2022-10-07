@@ -18,7 +18,7 @@
 
 </div>
 
-<form th:method="post"  th:action="@{/api/chats/2}") th:object="${messageDto}">
+<form th:method="post"  th:action="@{/api/chats/{id}(id=${userDto.getId()})}" th:object="${messageDto}">
     <textarea th:field="*{text}" rows="5" cols="5"></textarea>
     <input type="submit" th:value="send">
 

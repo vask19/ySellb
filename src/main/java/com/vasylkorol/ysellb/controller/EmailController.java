@@ -23,7 +23,6 @@ public class EmailController {
     @GetMapping("/activation/send")
     public String  sendActivationCode(Principal principal, Model model){
         UserDto userDto = emailService.sendCodeForActivationEmailToUserEmail(principal);
-        System.out.println(userDto);
         model.addAttribute("code",new EmailActivationCode());
         model.addAttribute("userDto",userDto);
         return "email/email_page";

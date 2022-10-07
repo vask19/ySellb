@@ -28,9 +28,6 @@ public class RegistrationServiceTest {
     @Test
     public void registerUserTest(){
         SignupRequest signupRequest = SignupRequest.builder()
-                .firstName("test")
-                .email("test")
-                .phoneNumber("test")
                 .username("test")
                 .build();
         User user = User.builder()

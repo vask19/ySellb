@@ -25,6 +25,8 @@ public interface ChatMapper {
     @Mapping(target = "messageDtoList",source = "messages")
     @Mapping(target = "senderId",source = "sender.id")
     @Mapping(target = "recipientId",source = "recipient.id")
+    @Mapping(target = "sendersUsername",source = "sender.username")
+    @Mapping(target = "recipientsUsername",source = "recipient.username")
     ChatDto fromChat(Chat chat);
 
     @Mapping(target = "messages",source = "messageDtoList")
@@ -36,6 +38,8 @@ public interface ChatMapper {
     @Mapping(target = "messageDtoList",source = "messages")
     @Mapping(target = "senderId",source = "sender.id")
     @Mapping(target = "recipientId",source = "recipient.id")
+    @Mapping(target = "sendersUsername",source = "sender.username")
+    @Mapping(target = "recipientsUsername",source = "recipient.username")
     List<ChatDto> fromChatList(List<Chat> chats);
 
 

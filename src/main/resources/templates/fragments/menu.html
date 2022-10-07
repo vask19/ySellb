@@ -11,7 +11,9 @@
         <td align="center">
             <table>
                 <tr>
+                    NOT_CONFIRMED_USER
                     <td>Menu -> </td>
+                    <td sec:authorize="hasAuthority('NOT_CONFIRMED_USER')"><a th:href="@{/api/activation/send}">Activation email</a></td>
                     <td><a th:href="@{/api}">Home</a></td>
                     <td><a th:href="@{/api/products}">Products</a></td>
                     <td><a th:href="@{/api/chats}">Chats</a></td>

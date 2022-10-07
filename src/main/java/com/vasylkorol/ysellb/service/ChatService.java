@@ -70,8 +70,9 @@ public class ChatService {
                 {
                     return chatRepository.save(Chat.builder()
                             .sender(sender)
+                            .recipient(recipient)
                             .messages(new ArrayList<>())
-                            .recipient(recipient).build());
+                            .build());
                 });
     }
 
@@ -96,6 +97,6 @@ public class ChatService {
     public List<ChatDto> getAllChatDtoList(Principal principal){
         User user = getUserByPrincipal(principal);
         return chatMapper.fromChatList(chatRepository.findAllByRecipientOrSender(user,user)
-                .orElseThrow(() -> new ChatNotFoundException("You haven't any chats")));
+                .orElseThrow(() -> new ChatNotFoundException("User haven't any chats")));
     }
 }
