@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
@@ -56,14 +58,18 @@ public class EmailService {
         return userMapper.fromUser(user);
     }
     @Transactional
-    public UserDto activationUsersEmail(Principal principal,Integer userAuthCode){
+    public UserDto activationUsersEmail(Principal principal,Integer usersAuthCode){
         User user = getUserByPrincipal(principal);
-        if (user.getEmailActivationCode() == userAuthCode){
+        if (user.getEmailActivationCode() == usersAuthCode){
             user.setActiveEmail(true);
             user.setRole(Role.ROLE_USER);
-            userRepository.save(user);
+            user = userRepository.save(user);
             log.info("User sent his activation code to the application ");
             log.info("user was activated");
+            Authentication authentication =  SecurityContextHolder.getContext().getAuthentication();
+            authentication.setAuthenticated(false);
+
+
         }
         else log.info("User sent a false activation code");
         return userMapper.fromUser(user);

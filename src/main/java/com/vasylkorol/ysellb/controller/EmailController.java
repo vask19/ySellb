@@ -33,6 +33,6 @@ public class EmailController {
 
 
         UserDto userDto = emailService.activationUsersEmail(principal,code.toInt());
-        return "home";
+        return "redirect:/logout";
     }
 }

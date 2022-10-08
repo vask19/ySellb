@@ -2,6 +2,7 @@ package com.vasylkorol.ysellb.controller;
 
 import com.vasylkorol.ysellb.dto.ChatDto;
 import com.vasylkorol.ysellb.dto.MessageDto;
+import com.vasylkorol.ysellb.dto.ProductDto;
 import com.vasylkorol.ysellb.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +20,10 @@ public class ChatController {
     private final ChatService chatService;
 
     @PostMapping("/{id}")
-    public String  sendMessage(@PathVariable("id") Integer id, Principal principal,@ModelAttribute("messageDto") MessageDto messageDto){
-        MessageDto message = chatService.sendMessage(principal,id,messageDto.getText());
+    public String  sendMessage(@PathVariable("id") Integer id, Principal principal,
+                               @ModelAttribute("messageDto") MessageDto messageDto,
+                               @RequestParam("productId") Integer productId){
+        MessageDto message = chatService.sendMessage(principal,id,messageDto.getText(),productId);
         return "home";
     }
 
@@ -28,9 +31,8 @@ public class ChatController {
     public String getAllChats(Principal principal, Model model){
         List<ChatDto> chatDtoList =
                 chatService.getAllChatDtoList(principal);
-        System.out.println(chatDtoList);
         model.addAttribute("chatDtoList",chatDtoList);
-        return "chat/chats_page";
+        return "chat/all_chats_page";
     }
 
 

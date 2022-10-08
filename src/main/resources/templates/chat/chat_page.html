@@ -1,29 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-<div th:insert="~{fragments/menu :: #nav-menu}"></div>
-
-
 <div th:each="chat: ${chatDtoList}">
     <div th:each="message: ${chat.getMessageDtoList()}">
         <div >
             <span th:text="${message.isSent()} ? ${chat.getSendersUsername()} : ${chat.getRecipientsUsername()}"></span>
             <span>: </span>
             <span th:text=" ${message.getText()}"></span>
+        </div>
     </div>
-    </div>
-    <hr/>
-    <br/>
-    <hr/>
-
 </div>
-<script>
 
-</script>
 </body>
 </html>

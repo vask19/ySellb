@@ -25,9 +25,8 @@ public class ProductController {
 
     private final ProductService productService;
     @GetMapping("")
-    public String allProductsPage(Model model){
+    public String allProductsPages(Model model){
         List<ProductDto> productDtoList = productService.getAll();
-        System.out.println(productDtoList);
         model.addAttribute("productDtoList",productDtoList);
         return "product/product_page";
     }
@@ -42,6 +41,7 @@ public class ProductController {
     public String  getProduct(@PathVariable("id") int id,Model model){
         ProductDto productDto =  productService.getProduct(id);
         model.addAttribute("productDto",productDto);
+        System.out.println("product----" + productDto);
         return "product/product_info";
     }
 
@@ -54,7 +54,6 @@ public class ProductController {
                                                  @ModelAttribute("productDto") ProductDto productDto
                                               ){
 
-        System.out.println(productDto);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
         productService.saveNewProduct(productDto,principal,new MultipartFile[]{file1,file2,file3});

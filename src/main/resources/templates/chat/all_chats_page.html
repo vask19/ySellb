@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+    <div th:each="chat: ${chatDtoList}">
+        <p th:text="${chat.getSendersUsername()}"></p>
+        <a th:href="@{/api/chats/{id}(id=${chat.getId()})}"><img th:src="@{/api/images/{id}(id=${chat.getChatImageId()})}" th:high="60" th:width="60">
+
+
+
+
+    </div>
+
+
+
+
+    <hr/>
+    <br/>
+    <hr/>
+
+</div>
+<script>
+
+</script>
+</body>
+</html>

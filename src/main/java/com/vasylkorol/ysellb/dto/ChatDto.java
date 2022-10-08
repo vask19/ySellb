@@ -14,5 +14,7 @@ public class ChatDto {
     private String sendersUsername;
     private String recipientsUsername;
     private List<MessageDto> messageDtoList;
+    private Long chatImageId;
+
 
 }

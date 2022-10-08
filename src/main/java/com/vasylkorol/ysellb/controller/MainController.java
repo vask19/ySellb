@@ -15,4 +15,11 @@ public class MainController {
     public String homePage(){
         return "home";
     }
+
+    @GetMapping("/log")
+    public String h(){
+
+        return "redirect:/logout";
+    }
 }
+

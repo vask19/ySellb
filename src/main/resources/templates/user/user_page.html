@@ -8,6 +8,7 @@
 <div th:insert="~{fragments/menu :: #nav-menu}"></div>
 
 <div class="userInfo">
+
     <p th:text="${userDto.getUsername}"></p>
     <p th:text="${userDto.getFirstName}"></p>
     <p th:text="${userDto.getSecondName}"></p>
@@ -20,7 +21,9 @@
 
 <form th:method="post"  th:action="@{/api/chats/{id}(id=${userDto.getId()})}" th:object="${messageDto}">
     <textarea th:field="*{text}" rows="5" cols="5"></textarea>
+    <input type="hidden" id="productId" name="productId" th:value="${productId}"/>
     <input type="submit" th:value="send">
+
 
 </form>
 <hr/>

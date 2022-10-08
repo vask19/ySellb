@@ -6,7 +6,7 @@
     <title>Product info</title>
 </head>
 <body>
-<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+<div th:insert="~{fragments/menu :: #nav-menu}" ></div>
 
 <p th:text="${productDto.getName()}"></p>
 <p th:text="${productDto.getType()}"></p>
@@ -14,7 +14,8 @@
 <p th:text="${productDto.getPrice()}"></p>
 <p th:text="${productDto.getDescription()}"></p>
 
-<a th:href="@{/api/users/{id}(id=${productDto.getUserId()})}"><p th:text="${productDto.getOwnerUsername()}"></p></a>
+
+<a th:href="@{/api/users/{id}(id=${productDto.getUserId()},productId=${productDto.getId})}"><p th:text="${productDto.getOwnerUsername()}"></p></a >
 
 </body>
 </html>

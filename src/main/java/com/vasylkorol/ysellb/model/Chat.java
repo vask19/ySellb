@@ -32,6 +32,7 @@ public class Chat {
     @OneToMany(mappedBy = "chat",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @Fetch(FetchMode.SUBSELECT)
     private List<Message> messages;
+    private Long chatImageId;
 
     @Override
     public String toString(){

@@ -16,6 +16,9 @@
     <br/>
     <input type="submit" value="Login"/>
 
+    <br/>
+    <a th:href="@{/api/auth/registration}">Registration</a>
+
     <div th:if="${param.error}" style="color: red">
         Uncorrected username or password!
     </div>

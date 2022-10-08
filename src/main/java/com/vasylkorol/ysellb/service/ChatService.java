@@ -1,15 +1,19 @@
 package com.vasylkorol.ysellb.service;
 import com.vasylkorol.ysellb.dto.ChatDto;
 import com.vasylkorol.ysellb.dto.MessageDto;
+import com.vasylkorol.ysellb.dto.ProductDto;
 import com.vasylkorol.ysellb.exception.ChatNotFoundException;
+import com.vasylkorol.ysellb.exception.ProductNotFoundException;
 import com.vasylkorol.ysellb.mapper.ChatMapper;
 import com.vasylkorol.ysellb.mapper.MessageMapper;
 import com.vasylkorol.ysellb.model.Chat;
 import com.vasylkorol.ysellb.model.Message;
+import com.vasylkorol.ysellb.model.Product;
 import com.vasylkorol.ysellb.model.User;
 import com.vasylkorol.ysellb.payload.request.EmailReceiver;
 import com.vasylkorol.ysellb.repository.ChatRepository;
 import com.vasylkorol.ysellb.repository.MessageRepository;
+import com.vasylkorol.ysellb.repository.ProductRepository;
 import com.vasylkorol.ysellb.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,16 +36,20 @@ public class ChatService {
     private final MessageMapper messageMapper = MessageMapper.MAPPER;
     private final ChatMapper chatMapper = ChatMapper.MAPPER;
     private final EmailService emailService;
+    private final ProductRepository productRepository;
 
     @Transactional
-    public MessageDto sendMessage(Principal principal, Integer recipientId,String messageText){
+    public MessageDto sendMessage(Principal principal, Integer recipientId, String messageText, Integer productId){
         User sender = getUserByPrincipal(principal);
         User recipient = userRepository.findFirstById(recipientId).orElseThrow(()
                         -> new UsernameNotFoundException("User not found with username: " + principal.getName())
     );
 
         log.info("User {} tried to send message to user {}", sender.getUsername(),recipient.getUsername());
-        Chat chat = createChat(sender,recipient);
+        Product product = productRepository.findById(productId).orElseThrow(()
+            -> new ProductNotFoundException("Product not found"));
+
+        Chat chat = createChat(sender,recipient,product.getPreviewImageId());
         Message message = Message.builder()
                 .text(messageText)
                 .sent(true)
@@ -64,13 +72,14 @@ public class ChatService {
 
 
     @Transactional
-    public Chat createChat(User sender,User recipient){
+    public Chat createChat(User sender,User recipient,Long chatImageId){
        return chatRepository.findByRecipientAndSenderOrSenderAndRecipient(sender,recipient)
                 .orElseGet(() ->
                 {
                     return chatRepository.save(Chat.builder()
                             .sender(sender)
                             .recipient(recipient)
+                            .chatImageId(chatImageId)
                             .messages(new ArrayList<>())
                             .build());
                 });
