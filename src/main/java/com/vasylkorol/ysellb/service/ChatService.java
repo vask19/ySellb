@@ -39,7 +39,7 @@ public class ChatService {
     private final ProductRepository productRepository;
 
     @Transactional
-    public MessageDto sendMessage(Principal principal, Integer recipientId, String messageText, Integer productId){
+    public MessageDto sendFirstMessage(Principal principal, Integer recipientId, String messageText, Integer productId){
         User sender = getUserByPrincipal(principal);
         User recipient = userRepository.findFirstById(recipientId).orElseThrow(()
                         -> new UsernameNotFoundException("User not found with username: " + principal.getName())
@@ -48,26 +48,62 @@ public class ChatService {
         log.info("User {} tried to send message to user {}", sender.getUsername(),recipient.getUsername());
         Product product = productRepository.findById(productId).orElseThrow(()
             -> new ProductNotFoundException("Product not found"));
-
         Chat chat = createChat(sender,recipient,product.getPreviewImageId());
-        Message message = Message.builder()
-                .text(messageText)
-                .sent(true)
-                .dateOfCreate(LocalDateTime.now())
-                .chat(chat)
-                .build();
+        Message message = createMessage(messageText,true,chat);
+
         messageRepository.save(message);
         chat.getMessages().add(message);
         chatRepository.save(chat);
         log.info("User {} sent message to uses {}", sender.getUsername(),recipient.getUsername());
-        EmailReceiver emailReceiver = EmailReceiver.builder()
-                .emails(Collections.singletonList(sender.getEmail()))
-                .subject("You have a new message")
-                .text("User " + sender.getUsername() + " send you a new message!")
-                .build();
+        EmailReceiver emailReceiver = createEmailReceiver(sender.getEmail(),
+                "You have a new message",
+                ("User " + sender.getUsername() + " send you a new message!"));
         emailService.sendEmailWithText(emailReceiver);
         log.info("message was sent to email");
         return messageMapper.fromMessage(message);
+    }
+
+    @Transactional
+    public MessageDto sendMessage(Integer chatId,String messageText,Principal principal){
+        Chat chat = chatRepository.findById(chatId).orElseThrow(()->
+                new ChatNotFoundException("Chat not found with id: "+ chatId));
+        User sender = chat.getSender();
+        boolean isSend = sender.getUsername().equals(principal.getName());
+        System.out.println();
+        System.out.println(isSend);
+        System.out.println();
+        Message message = createMessage(messageText,isSend,chat);
+        messageRepository.save(message);
+        chat.getMessages().add(message);
+        chatRepository.save(chat);
+        log.info("User {} sent message to uses {}", sender.getUsername(),chat.getRecipient().getUsername());
+        EmailReceiver emailReceiver = createEmailReceiver(sender.getEmail(),
+                "You have a new message",
+                ("User " + sender.getUsername() + " send you a new message!"));
+        emailService.sendEmailWithText(emailReceiver);
+        log.info("message was sent to email");
+        return messageMapper.fromMessage(message);
+
+
+
+
+
+    }
+
+    private Message createMessage(String text,boolean isSent,Chat chat){
+        return Message.builder()
+                .text(text)
+                .dateOfCreate(LocalDateTime.now())
+                .sent(isSent)
+                .chat(chat)
+                .build();
+    }
+    private EmailReceiver createEmailReceiver(String email,String subject,String text){
+        return EmailReceiver.builder()
+                .emails(Collections.singletonList(email))
+                .subject(subject)
+                .text(text)
+                .build();
     }
 
 
@@ -90,6 +126,12 @@ public class ChatService {
                 -> new UsernameNotFoundException("User not found with username: " + principal.getName()));
     }
 
+
+
+    public ChatDto getChatByChatId(Integer chatId){
+        return chatMapper.fromChat(chatRepository.findById(chatId).orElseThrow(()->
+                new ChatNotFoundException("Chat not found with id: " + chatId)));
+    }
     @Transactional
     public ChatDto getChat(Principal principal, Integer recipientId) {
        User sender = getUserByPrincipal(principal);

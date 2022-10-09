@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.channels.Pipe;
 import java.security.Principal;
 import java.util.List;
 
@@ -20,11 +21,21 @@ public class ChatController {
     private final ChatService chatService;
 
     @PostMapping("/{id}")
-    public String  sendMessage(@PathVariable("id") Integer id, Principal principal,
-                               @ModelAttribute("messageDto") MessageDto messageDto,
-                               @RequestParam("productId") Integer productId){
-        MessageDto message = chatService.sendMessage(principal,id,messageDto.getText(),productId);
+    public String  sendFirstMessage(@PathVariable("id") Integer recipientId, Principal principal,
+                               @ModelAttribute(value = "messageDto") MessageDto messageDto,
+                               @RequestParam(value = "productId") Integer productId){
+        MessageDto message = chatService.sendFirstMessage(principal,recipientId,messageDto.getText(),productId);
         return "home";
+    }
+
+    @PostMapping("/{id}/send")
+    public String sendMessage(@PathVariable("id") Integer chatId,
+                              @ModelAttribute(value = "messageDto") MessageDto messageDto,
+                              Principal principal){
+        MessageDto messageDto1 = chatService.sendMessage(chatId,messageDto.getText(),principal);
+
+        return "redirect:" + "/api/chats/" + chatId;
+
     }
 
     @GetMapping("")
@@ -37,8 +48,13 @@ public class ChatController {
 
 
     @GetMapping("{id}")
-    public String getAllMessagesWithUserById(@PathVariable("id") Integer recipientId, Principal principal){
-        var chatDto = chatService.getChat(principal,recipientId);
-        return "chat/chats_page";
+    public String getAllMessagesWithUserById(@PathVariable("id") Integer chatId,Model model){
+
+        var chatDto = chatService.getChatByChatId(chatId);
+        System.out.println(chatDto);
+        model.addAttribute("chatDto",chatDto);
+        model.addAttribute("messageDto",new MessageDto());
+
+        return "chat/chat_page";
     }
 }
