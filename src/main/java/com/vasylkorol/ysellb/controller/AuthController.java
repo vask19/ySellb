@@ -8,10 +8,8 @@ import com.vasylkorol.ysellb.util.UserValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 
@@ -39,13 +37,14 @@ public class AuthController {
 
     @PostMapping("/registration")
     public String registration(@ModelAttribute("signupRequest") @Valid SignupRequest signupRequest,
-                               BindingResult bindingResult){
+                               BindingResult bindingResult,
+                               @RequestPart("avatar")MultipartFile avatar){
         userValidator.validate(signupRequest,bindingResult);
 
         if (bindingResult.hasErrors()){
             return "auth/registration";
         }
-        registrationService.register(signupRequest);
+        registrationService.register(signupRequest,avatar);
         return "redirect:/login";
 
     }

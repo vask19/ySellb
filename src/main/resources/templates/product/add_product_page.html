@@ -6,6 +6,7 @@
 </head>
 <body>
 <div th:insert="~{fragments/menu :: #nav-menu}"></div>
+<link th:href="@{/styles/menu.css}" rel="stylesheet" />
 
 <form th:method="post" th:action="@{/api/products}" th:object="${productDto}" enctype="multipart/form-data">
 

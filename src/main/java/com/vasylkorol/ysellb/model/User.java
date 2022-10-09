@@ -1,9 +1,6 @@
 package com.vasylkorol.ysellb.model;
 import com.vasylkorol.ysellb.model.enums.Role;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -33,9 +30,10 @@ public class User {
     private boolean activeEmail;
     private int emailActivationCode;
 
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinColumn(name = "image_id")
-    private Image avatar;
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "avatar_id")
+    @ToString.Exclude
+    private Avatar avatar;
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @Fetch(FetchMode.SUBSELECT)

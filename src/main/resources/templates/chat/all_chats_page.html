@@ -4,12 +4,77 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link th:href="@{/styles/menu.css}" rel="stylesheet" />
+
 </head>
 <body>
-<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+<div th:insert="~{fragments/menu :: #nav-menu}">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Open Sans', sans-serif;
+        }
+        #nav-menu{
+            width: 100vw;
+            height: 100vh;
+        }
+        .menu{
+            height: 10vh;
+            background-color: #0c3354;
+            text-align: center;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+
+        }
+        nav{
+            width: 80%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+        }
+        nav a{
+            color: white;
+            text-decoration: none;
+        }
+
+        .menu__nav__home{
+            color: white;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 40px;
+            font-style: italic;
+            margin-bottom: 20px;
+            margin-right: 300px;
+
+        }
+        .menu__nav__items{
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+        .menu__nav__items a {
+            margin-right:80px;
+
+
+        }
+        .menu__nav__add{
+            height: 30px;
+            width: 100%;
+            background-color: white;
+        }
+    </style>
+</div>
+
+
+    hello
     <div th:each="chat: ${chatDtoList}">
         <p th:text="${chat.getSendersUsername()}"></p>
-        <a th:href="@{/api/chats/{id}(id=${chat.getId()})}"><img th:src="@{/api/images/{id}(id=${chat.getChatImageId()})}" th:high="60" th:width="60">
+        <a th:href="@{/api/chats/{id}(id=${chat.getId()})}"><img th:src="@{/api/images/{id}(id=${chat.getChatImageId()})}" th:high="60" th:width="60"></a>
 
 
 

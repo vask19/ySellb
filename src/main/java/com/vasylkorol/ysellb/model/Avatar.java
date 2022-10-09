@@ -2,6 +2,7 @@ package com.vasylkorol.ysellb.model;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 import javax.persistence.*;
@@ -11,11 +12,12 @@ import java.util.Objects;
 @Data
 @AllArgsConstructor
 @Builder
-@Table(name = "image")
-public class Image {
+@NoArgsConstructor
+@Table(name = "avatar")
+public class Avatar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "image_id")
+    @Column(name = "avatar_id")
     private Long id;
     private String name;
     private String originalFileName;
@@ -24,20 +26,9 @@ public class Image {
     private boolean isPreviewImage;
     @Lob
     private byte[] bytes;
-    @ManyToOne(cascade = CascadeType.REFRESH,fetch = FetchType.EAGER)
-    private Product product;
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private User user;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Image image = (Image) o;
-        return id.equals(image.id);
-    }
-
-    public Image(){
-
-    }
     @Override
     public int hashCode() {
         return Objects.hash(id);

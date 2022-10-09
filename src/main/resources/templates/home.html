@@ -3,10 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>home</title>
+    <link th:href="@{/styles/menu.css}" rel="stylesheet" />
+
 </head>
 <body>
 <div th:insert="~{fragments/menu :: #nav-menu}"></div>
+<div>
 
-    hello
+    <div th:each="product: ${productDtoList}">
+        <div  >
+
+            <p th:text="${product.getName()}">Name</p>
+            <p th:text="${product.getPrice()}" >price</p>
+            <a th:href="@{/api/products/{id}(id=${product.getId()})}"><img th:src="@{/api/images/{id}(id=${product.getImageIds().get(0)})}" th:high="60" th:width="60"></a>
+
+
+            <hr/>
+        </div>
+
+    </div>
+
+</div>
+
+
 </body>
 </html>

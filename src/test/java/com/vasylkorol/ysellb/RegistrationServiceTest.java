@@ -40,7 +40,7 @@ public class RegistrationServiceTest {
                 .build();
         doReturn(user)
                 .when(userRepository).save(user);
-        var actualResult = registrationService.register(signupRequest);
+        var actualResult = registrationService.register(signupRequest,null);
         assertEquals(actualResult,signupRequest);
         verify(userRepository).save(user);
 
