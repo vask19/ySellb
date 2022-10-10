@@ -7,13 +7,14 @@
 </head>
 <body>
 <div th:insert="~{fragments/menu :: #nav-menu}" ></div>
+<link th:href="@{/styles/menu.css}" rel="stylesheet" />
+
 
 <p th:text="${productDto.getName()}"></p>
 <p th:text="${productDto.getType()}"></p>
 <p th:text="${productDto.getLocate()}"></p>
 <p th:text="${productDto.getPrice()}"></p>
 <p th:text="${productDto.getDescription()}"></p>
-
 
 <a th:href="@{/api/users/{id}(id=${productDto.getUserId()},productId=${productDto.getId})}"><p th:text="${productDto.getOwnerUsername()}"></p></a >
 

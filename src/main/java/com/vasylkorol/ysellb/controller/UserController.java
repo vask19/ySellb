@@ -29,7 +29,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public String  getUsersPage(@PathVariable("id") Integer id, Model model, @RequestParam("productId") Integer productId){
+    public String  getUsersPage(@PathVariable("id") Integer id, Model model, @RequestParam(value = "productId") Integer productId){
         UserDto userDto = userService.getUserById(id);
         List<ProductDto> productDtoList = productService.getAllByUserId(id);
         userDto.setProductDtoList(productDtoList);

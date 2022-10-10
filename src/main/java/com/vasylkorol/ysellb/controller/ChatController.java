@@ -23,9 +23,9 @@ public class ChatController {
     @PostMapping("/{id}")
     public String  sendFirstMessage(@PathVariable("id") Integer recipientId, Principal principal,
                                @ModelAttribute(value = "messageDto") MessageDto messageDto,
-                               @RequestParam(value = "productId",required = false) Integer productId){
+                               @RequestParam(value = "productId") Integer productId){
         MessageDto message = chatService.sendFirstMessage(principal,recipientId,messageDto.getText(),productId);
-        return "redirect:" + "/api/users/" + recipientId;
+        return "redirect:" + "/api/users/" + recipientId + "?productId=" + productId;
     }
 
     @PostMapping("/{id}/send")
@@ -43,6 +43,7 @@ public class ChatController {
         List<ChatDto> chatDtoList =
                 chatService.getAllChatDtoList(principal);
         model.addAttribute("chatDtoList",chatDtoList);
+        model.addAttribute("username",principal.getName());
         return "chat/all_chats_page";
     }
 
@@ -51,7 +52,6 @@ public class ChatController {
     public String getAllMessagesWithUserById(@PathVariable("id") Integer chatId,Model model){
 
         var chatDto = chatService.getChatByChatId(chatId);
-        System.out.println(chatDto);
         model.addAttribute("chatDto",chatDto);
         model.addAttribute("messageDto",new MessageDto());
 
