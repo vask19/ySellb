@@ -7,6 +7,7 @@ import com.vasylkorol.ysellb.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,12 +38,18 @@ public class AdminController {
 
 
     @GetMapping("/users/all")
-    public ResponseEntity<List<UserDto>> getAllUsers(){
-        return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
+    public String  getAllUsers(Model model){
+        var userDtoList = userService.getAllUsers();
+        model.addAttribute("userDtoList",userDtoList);
+        return "admin/user_page";
+
     }
 
     @GetMapping("users/{id}")
-    public ResponseEntity<UserDto> getUser(@PathVariable("id") Integer id){
-        return new ResponseEntity<>(userService.getUserById(id),HttpStatus.OK);
+    public String  getUser(@PathVariable("id") Integer id,Model model){
+        UserDto userDto = userService.getUserById(id);
+        model.addAttribute("userDto",userDto);
+        return "admin/user_info";
+
     }
 }

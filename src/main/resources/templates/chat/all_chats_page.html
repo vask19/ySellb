@@ -18,8 +18,11 @@
 
     <div th:each="chat: ${chatDtoList}">
         <p th:text="${chat.getSendersUsername()}"></p>
-        <a th:href="@{/api/chats/{id}(id=${chat.getId()})}"><img th:src="@{/api/images/{id}(id=${chat.getChatImageId()})}" th:high="60" th:width="60"></a>
+        <br/>
         <img th:src="@{/api/avatars/{id}(id=${chat.getSendersUsername()})}" th:high="60" th:width="60">
+        <br/>
+        <br/>
+        <a th:href="@{/api/chats/{id}(id=${chat.getId()})}"><img th:src="@{/api/images/{id}(id=${chat.getChatImageId()})}" th:high="60" th:width="60"></a>
 
 
 

@@ -9,15 +9,17 @@ import com.vasylkorol.ysellb.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.Collections;
 import java.util.List;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
-@RequestMapping("/api/bucket/")
+@RequestMapping("/api/buckets/")
 public class BucketController {
     private final UserService userService;
     private final ProductService productService;
@@ -26,27 +28,33 @@ public class BucketController {
 
 
     @GetMapping("/add/{id}")
-    public ProductDto addProductToBucket(@PathVariable("id") int id, Principal principal){
-        return bucketService.addProduct(id,principal);
+    public String  addProductToBucket(@PathVariable("id") int id, Principal principal){
+        bucketService.addProduct(id,principal);
+
+        return "redirect:/api/products/" + id;
 
 
     }
 
     @GetMapping()
-    public ResponseEntity<List<ProductDto>> getBucket(Principal principal){
+    public String  getBucket(Principal principal,Model model){
         BucketDto bucketDto = bucketService.getBucketByUser(principal);
         bucketService.getBucketByUser(principal);
-        return new ResponseEntity<>((bucketDto.getProducts() == null
+        List<ProductDto> productDtoList =  (bucketDto.getProducts() == null
                 ? Collections.emptyList()
-                : bucketDto.getProducts()),HttpStatus.OK);
+                : bucketDto.getProducts());
+        model.addAttribute("productDtoList",productDtoList);
+        return "redirect:/api/buckets";
+
 
 
 
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ProductDto> deleteProduct(@PathVariable Integer id, Principal principal){
-        return new ResponseEntity<>(bucketService.deleteProduct(id,principal), HttpStatus.OK);
+    public String  deleteProduct(@PathVariable Integer id, Principal principal){
+        bucketService.deleteProduct(id,principal);
+        return "redirect:/api/buckets";
     }
 
 }
