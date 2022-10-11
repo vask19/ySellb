@@ -39,12 +39,11 @@ public class BucketController {
     @GetMapping()
     public String  getBucket(Principal principal,Model model){
         BucketDto bucketDto = bucketService.getBucketByUser(principal);
-        bucketService.getBucketByUser(principal);
         List<ProductDto> productDtoList =  (bucketDto.getProducts() == null
                 ? Collections.emptyList()
                 : bucketDto.getProducts());
         model.addAttribute("productDtoList",productDtoList);
-        return "redirect:/api/buckets";
+        return "bucket/bucket_page";
 
 
 
@@ -54,7 +53,7 @@ public class BucketController {
     @DeleteMapping("/{id}")
     public String  deleteProduct(@PathVariable Integer id, Principal principal){
         bucketService.deleteProduct(id,principal);
-        return "redirect:/api/buckets";
+        return "redirect:/api/buckets/";
     }
 
 }

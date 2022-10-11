@@ -27,6 +27,7 @@ public class UserService {
 
 
 
+    @Transactional
     public List<UserDto> getAllUsers(){
         return userMapper.fromUserList(userRepository.findAll());
     }

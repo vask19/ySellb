@@ -1,27 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="UTF-8">
     <title>home</title>
-    <link th:href="@{/styles/menu.css}" rel="stylesheet" />
+
 
 </head>
 <body>
 <div th:insert="~{fragments/menu :: #nav-menu}"></div>
+<link th:href="@{/styles/menu.css}" rel="stylesheet" />
+<br/>
+
 <div>
 
     <div th:each="product: ${productDtoList}">
-        <div  >
-
+        <div >
             <p th:text="${product.getName()}">Name</p>
             <p th:text="${product.getPrice()}" >price</p>
             <a th:href="@{/api/products/{id}(id=${product.getId()})}"><img th:src="@{/api/images/{id}(id=${product.getImageIds().get(0)})}" th:high="60" th:width="60"></a>
+
 
 
             <hr/>
         </div>
 
     </div>
+    <br/>
+    <br/>
+    1
+    <p sec:authorize="hasAnyAuthority('ROLE_ADMIN')"><a th:href="@{/api/}">Users</a></p>
+        2
 
 </div>
 

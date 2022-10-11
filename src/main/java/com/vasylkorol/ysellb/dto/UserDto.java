@@ -1,4 +1,5 @@
 package com.vasylkorol.ysellb.dto;
+import com.vasylkorol.ysellb.model.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +20,7 @@ public class UserDto  {
     private String username;
     private String phoneNumber;
     private boolean active;
+    private Role role;
     @Builder.Default
     private List<ProductDto> productDtoList = new ArrayList<>();
 

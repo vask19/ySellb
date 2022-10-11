@@ -6,69 +6,25 @@
     <title>Title</title>
 
 
-    <style>
-        *{
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Open Sans', sans-serif;
-        }
-        #nav-menu{
-            width: 100vw;
-            height: 100vh;
-        }
-        .menu{
-            height: 10vh;
-            background-color: #0c3354;
-            text-align: center;
-            margin: 0 auto;
-            display: flex;
-            justify-content: center;
 
-        }
-        nav{
-            width: 80%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-        }
-        nav a{
-            color: white;
-            text-decoration: none;
-        }
-
-        .menu__nav__home{
-            color: white;
-            font-family: 'Open Sans', sans-serif;
-            font-size: 40px;
-            font-style: italic;
-            margin-bottom: 20px;
-            margin-right: 300px;
-
-        }
-        .menu__nav__items{
-            height: 100%;
-            display: flex;
-            align-items: center;
-        }
-        .menu__nav__items a {
-            margin-right:80px;
-
-
-        }
-        .menu__nav__add{
-            height: 30px;
-            width: 100%;
-            background-color: white;
-        }
-    </style>
 </head>
 <body>
+<div id ="nav-menu" class="container">
+    <div class="modal__window">
+        <ul class="modal__window__list">
+            <li>Products</li>
+            <a th:href="@{/api/buckets/}"><li >Bucket</li></a>
+            <li>Settings</li>
+            <a th:href = "@{/logout}"><li>Log out</li></a>
+            <div sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+                <a th:href="@{/api/admin}"><li>Admin panel</li></a>
+            </div>
 
 
-<div id ="nav-menu">
+
+        </ul>
+
+    </div>
     <menu class="menu">
         <nav class="menu__nav">
             <div class="menu__nav__item__home">
@@ -76,12 +32,35 @@
             </div>
             <div class="menu__nav__items">
                 <a th:href="@{/api/chats}" class="menu__nav__chats">Chats</a>
-                <a href="" class="menu__nav__account">My account</a>
-                <a href="" class="menu__nav__add">Add product</a>
+                <a th:href="@{/api/chats}" class="menu__nav__account">My account</a>
+                <a th:href="@{/api/products/add}" class="menu__nav__add">Add product</a>
             </div>
         </nav>
     </menu>
 </div>
+
+
+
+
+
+
+
+
+
+<!--<div id ="nav-menu">-->
+<!--    <menu class="menu">-->
+<!--        <nav class="menu__nav">-->
+<!--            <div class="menu__nav__item__home">-->
+<!--                <a th:href="@{/api}" class="menu__nav__home">ySellb</a>-->
+<!--            </div>-->
+<!--            <div class="menu__nav__items">-->
+<!--                <a th:href="@{/api/chats}" class="menu__nav__chats">Chats</a>-->
+<!--                <a href="" class="menu__nav__account">My account</a>-->
+<!--                <a href="" class="menu__nav__add">Add product</a>-->
+<!--            </div>-->
+<!--        </nav>-->
+<!--    </menu>-->
+<!--</div>-->
 
 
 

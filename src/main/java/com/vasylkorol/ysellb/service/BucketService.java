@@ -67,6 +67,7 @@ public class BucketService {
 
     }
 
+    @Transactional
     public BucketDto getBucketByUser(Principal principal){
         User user =  getUserByPrincipal(principal);
         Bucket bucket = bucketRepository.findByUser(user).orElse(null);

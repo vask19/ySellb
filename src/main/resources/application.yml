@@ -1,4 +1,9 @@
 spring:
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+
   mail:
     host: smtp.gmail.com
     port: 587
@@ -14,6 +19,8 @@ spring:
     sender:
       email: no-reply@gmail.com
       text: no-reply
+
+
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5433/postgres
@@ -35,3 +42,5 @@ logging:
     name: ysellb.log
 server:
   port: 8080
+
+

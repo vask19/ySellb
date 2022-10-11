@@ -7,12 +7,13 @@ import com.vasylkorol.ysellb.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/api/admin")
 @RequiredArgsConstructor
 public class AdminController {
@@ -37,11 +38,11 @@ public class AdminController {
 
 
 
-    @GetMapping("/users/all")
+    @GetMapping("/users")
     public String  getAllUsers(Model model){
         var userDtoList = userService.getAllUsers();
         model.addAttribute("userDtoList",userDtoList);
-        return "admin/user_page";
+        return "admin/all_users_page";
 
     }
 
@@ -51,5 +52,10 @@ public class AdminController {
         model.addAttribute("userDto",userDto);
         return "admin/user_info";
 
+    }
+
+    @GetMapping("")
+    public String getAdminPanelPage(){
+        return "admin/admin_panel_page";
     }
 }

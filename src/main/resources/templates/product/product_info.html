@@ -16,7 +16,15 @@
 <p th:text="${productDto.getPrice()}"></p>
 <p th:text="${productDto.getDescription()}"></p>
 
+<br/>
+<form th:method="get" th:action="@{/api/buckets/add/{id}(id=${productDto.getId()})}">
+    <input type="submit" th:value="add">
+</form>
+
 <a th:href="@{/api/users/{id}(id=${productDto.getUserId()},productId=${productDto.getId})}"><p th:text="${productDto.getOwnerUsername()}"></p></a >
+
+
+
 
 </body>
 </html>
