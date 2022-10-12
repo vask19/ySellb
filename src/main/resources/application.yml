@@ -7,8 +7,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: ysellb13@gmail.com
-    password: sfdunlujnasmbyli
+    username: ysellby@gmail.com
+    password: ejjowuqxbqlagztp
     test-connection: true
     properties:
       mail:
@@ -23,9 +23,9 @@ spring:
 
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5433/postgres
-    username: postgres
-    password: pass
+    url: ${JDBC_DATABASE_URL:jdbc:postgresql://localhost:5433/postgres}
+    username: ${JDBC_DATABASE_USERNAME:postgres}
+    password: ${JDBC_DATABASE_PASSWORD:pass}
     dbcp2:
       default-schema: public
   jpa:

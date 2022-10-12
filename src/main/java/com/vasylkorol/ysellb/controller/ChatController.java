@@ -25,7 +25,7 @@ public class ChatController {
                                @ModelAttribute(value = "messageDto") MessageDto messageDto,
                                @RequestParam(value = "productId") Integer productId){
         MessageDto message = chatService.sendFirstMessage(principal,recipientId,messageDto.getText(),productId);
-        return "redirect:" + "/api/users/" + recipientId + "?productId=" + productId;
+        return "redirect:" + "/api/products/" + productId;
     }
 
     @PostMapping("/{id}/send")

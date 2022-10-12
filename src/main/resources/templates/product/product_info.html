@@ -7,7 +7,8 @@
 </head>
 <body>
 <div th:insert="~{fragments/menu :: #nav-menu}" ></div>
-<link th:href="@{/styles/menu.css}" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" media="all"
+      href="/menu.css" th:href="@{/menu.css}" />
 
 
 <p th:text="${productDto.getName()}"></p>
@@ -23,8 +24,16 @@
 
 <a th:href="@{/api/users/{id}(id=${productDto.getUserId()},productId=${productDto.getId})}"><p th:text="${productDto.getOwnerUsername()}"></p></a >
 
+<form th:method="post"  th:action="@{/api/chats/{id}(id=${productDto.getUserId()})}" th:object="${messageDto}">
+    <textarea th:field="*{text}" rows="5" cols="5"></textarea>
+    <input type="hidden" id="productId" name="productId" th:value="${productDto.getId()}"/>
+    <input type="submit" th:value="send">
 
 
+</form>
+
+
+<script type="text/javascript" th:src="@{/js/modalWindow.js}"></script>
 
 </body>
 </html>

@@ -2,9 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Settings</title>
 </head>
 <body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+<link rel="stylesheet" type="text/css" media="all"
+      href="/menu.css" th:href="@{/menu.css}" />
+
+
+<script type="text/javascript" th:src="@{/js/modalWindow.js}"></script>
 
 </body>
 </html>

@@ -1,30 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
-      xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en"
+      xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" type="text/css" media="all"
+          href="/menu.css" th:href="@{/menu.css}" />
 
 
 
 </head>
 <body>
-<div id ="nav-menu" class="container">
-    <div class="modal__window">
-        <ul class="modal__window__list">
-            <li>Products</li>
-            <a th:href="@{/api/buckets/}"><li >Bucket</li></a>
-            <li>Settings</li>
-            <a th:href = "@{/logout}"><li>Log out</li></a>
-            <div sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
-                <a th:href="@{/api/admin}"><li>Admin panel</li></a>
-            </div>
 
-
-
-        </ul>
-
-    </div>
+<div  id="nav-menu" class="container">
     <menu class="menu">
         <nav class="menu__nav">
             <div class="menu__nav__item__home">
@@ -32,81 +20,24 @@
             </div>
             <div class="menu__nav__items">
                 <a th:href="@{/api/chats}" class="menu__nav__chats">Chats</a>
-                <a th:href="@{/api/chats}" class="menu__nav__account">My account</a>
+                <a href="" class="menu__nav__account">My account</a>
                 <a th:href="@{/api/products/add}" class="menu__nav__add">Add product</a>
             </div>
         </nav>
     </menu>
+    <div class="modal__window">
+        <ul class="modal__window__list">
+            <li>Products</li>
+            <a th:href="@{/api/buckets/}"><li >Bucket</li></a>
+            <a th:href="@{/api/settings/}"><li>Settings</li></a>
+            <a th:href = "@{/logout}"><li>Log out</li></a>
+            <div sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+                <a th:href="@{/api/admin}"><li>Admin panel</li></a>
+            </div>
+        </ul>
+    </div>
 </div>
 
-
-
-
-
-
-
-
-
-<!--<div id ="nav-menu">-->
-<!--    <menu class="menu">-->
-<!--        <nav class="menu__nav">-->
-<!--            <div class="menu__nav__item__home">-->
-<!--                <a th:href="@{/api}" class="menu__nav__home">ySellb</a>-->
-<!--            </div>-->
-<!--            <div class="menu__nav__items">-->
-<!--                <a th:href="@{/api/chats}" class="menu__nav__chats">Chats</a>-->
-<!--                <a href="" class="menu__nav__account">My account</a>-->
-<!--                <a href="" class="menu__nav__add">Add product</a>-->
-<!--            </div>-->
-<!--        </nav>-->
-<!--    </menu>-->
-<!--</div>-->
-
-
-
-
-<!--<table id ='nav-menu' width="100%">-->
-<!--    <tr>-->
-<!--        <td align="center">-->
-<!--            <table>-->
-<!--                <tr>-->
-<!--                    NOT_CONFIRMED_USER-->
-<!--                    <td>Menu -> </td>-->
-<!--                    <td><a th:href="@{/api/emails/activation/send}">Activation email</a></td>-->
-<!--                    <td><a th:href="@{/api}">Home</a></td>-->
-<!--                    <td><a th:href="@{/api/products}">Products</a></td>-->
-<!--                    <td><a th:href="@{/api/chats}">Chats</a></td>-->
-<!--&lt;!&ndash;                    <td sec:authorize="hasAnyAuthority('ADMIN', 'MANAGER')"><a th:href="@{/users}">Users</a></td>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <td sec:authorize ="isAuthenticated()"><a th:href = "@{/bucket}">Bucket</a></td>&ndash;&gt;-->
-<!--                </tr>-->
-<!--            </table>-->
-<!--        </td>-->
-<!--        <td align="right">-->
-<!--            <div sec:authorize = "isAuthenticated()">-->
-<!--                <div>-->
-<!--                    Hello, <a th:href="@{/users/profile}"><span sec:authentication = "principal.username">Bill</span></a>-->
-<!--                </div>-->
-<!--                <div>-->
-<!--                    <a th:href = "@{/logout}">Logout</a>-->
-<!--                </div>-->
-<!--            </div>-->
-
-
-<!--            <div sec:authorize = "!isAuthenticated()">-->
-<!--                <div>-->
-<!--                    Hello, Unknown. Please <a th:href = "@{/login}">Login</a>-->
-<!--                </div>-->
-<!--            </div>-->
-
-<!--        </td>-->
-
-
-
-<!--    </tr>-->
-
-
-
-<!--</table>-->
 
 </body>
 </html>

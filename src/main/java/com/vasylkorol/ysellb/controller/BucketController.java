@@ -19,7 +19,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/api/buckets/")
+@RequestMapping("/api/buckets")
 public class BucketController {
     private final UserService userService;
     private final ProductService productService;

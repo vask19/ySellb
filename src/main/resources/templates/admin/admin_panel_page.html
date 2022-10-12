@@ -6,11 +6,15 @@
 </head>
 <body>
 <div th:insert="~{fragments/menu :: #nav-menu}"></div>
-<link th:href="@{/styles/menu.css}" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" media="all"
+      href="/menu.css" th:href="@{/menu.css}" />
 
 <form th:method="get" th:action="@{/api/admin/users}">
     <button type="submit">Show users</button>
 </form>
+
+
+<script type="text/javascript" th:src="@{/js/modalWindow.js}"></script>
 
 </body>
 </html>

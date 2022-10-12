@@ -1,4 +1,5 @@
 package com.vasylkorol.ysellb.controller;
+import com.vasylkorol.ysellb.dto.MessageDto;
 import com.vasylkorol.ysellb.dto.ProductDto;
 import com.vasylkorol.ysellb.security.CustomUserDetails;
 import com.vasylkorol.ysellb.service.ProductService;
@@ -41,7 +42,7 @@ public class ProductController {
     public String  getProduct(@PathVariable("id") int id,Model model){
         ProductDto productDto =  productService.getProduct(id);
         model.addAttribute("productDto",productDto);
-        System.out.println("product----" + productDto);
+        model.addAttribute("messageDto", new MessageDto());
         return "product/product_info";
     }
 
